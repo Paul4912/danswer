@@ -59,7 +59,7 @@ function SummaryRow({
   return (
     <TableRow
       onClick={onToggle}
-      className="border-border bg-white py-4 rounded-sm !border cursor-pointer"
+      className="border-border py-4 rounded-sm !border cursor-pointer"
     >
       <TableCell>
         <div className="text-xl flex items-center truncate ellipsis gap-x-2 font-semibold">
@@ -193,10 +193,8 @@ function ConnectorRow({
 
   return (
     <TableRow
-      className={`hover:bg-hover-light ${
-        invisible
-          ? "invisible !h-0 !-mb-10 !border-none"
-          : "!border !border-border"
+      className={`border hover:bg-hover-light ${
+        invisible ? "invisible !h-0 !-mb-10 border-none" : "border-none"
       }  w-full cursor-pointer relative `}
       onClick={() => {
         router.push(`/admin/connector/${ccPairsIndexingStatus.cc_pair_id}`);
@@ -430,7 +428,7 @@ export function CCPairIndexingStatusTable({
           placeholder="Search connectors..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="ml-1 w-96 h-9 flex-none rounded-md bg-background-50 px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="ml-1 w-96 h-9 flex-none rounded-md border border-border bg-background-search px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         />
 
         <Button className="h-9" onClick={() => toggleSources()}>

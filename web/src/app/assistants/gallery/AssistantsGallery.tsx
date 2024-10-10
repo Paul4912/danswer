@@ -86,7 +86,7 @@ export function AssistantGalleryCard({
                 onClick={async () => {
                   if (onlyAssistant) {
                     setPopup({
-                      message: `Cannot remove "${assistant.name}" - you must have at least one assistant.`,
+                      message: `Cannot remove "${assistant.name}" - you must have at least one specialist.`,
                       type: "error",
                     });
                     return;
@@ -146,7 +146,7 @@ export function AssistantGalleryCard({
       </div>
       <p className="text-sm mt-2">{assistant.description}</p>
       <p className="text-subtle text-sm my-2">
-        Author: {assistant.owner?.email || "Danswer"}
+        Author: {assistant.owner?.email || "Buddy"}
       </p>
       {assistant.tools.length > 0 && (
         <AssistantTools list assistant={assistant} />
@@ -208,7 +208,7 @@ export function AssistantsGallery() {
     <>
       {popup}
       <div className="mx-auto w-searchbar-xs 2xl:w-searchbar-sm 3xl:w-searchbar">
-        <AssistantsPageTitle>Assistant Gallery</AssistantsPageTitle>
+        <AssistantsPageTitle>Specialist Gallery</AssistantsPageTitle>
 
         <div className="grid grid-cols-2 gap-4 mt-4 mb-6">
           <Button
@@ -217,7 +217,7 @@ export function AssistantsGallery() {
             className="p-6 text-base"
             icon={FiPlus}
           >
-            Create New Assistant
+            Create New Specialists
           </Button>
 
           <Button
@@ -226,7 +226,7 @@ export function AssistantsGallery() {
             className="text-base py-6"
             icon={FiList}
           >
-            Your Assistants
+            Your Specialists
           </Button>
         </div>
 
@@ -234,7 +234,7 @@ export function AssistantsGallery() {
           <div className="relative">
             <input
               type="text"
-              placeholder="Search assistants..."
+              placeholder="Search specialists..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="
@@ -328,7 +328,7 @@ export function AssistantsGallery() {
           nonDefaultAssistants.length == 0 &&
           assistants.length != 0 && (
             <div className="text-text-500">
-              No assistants found for this search
+              No specialists found for this search
             </div>
           )}
 
@@ -336,11 +336,11 @@ export function AssistantsGallery() {
           <>
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-2 text-text-900">
-                Default Assistants
+                Default Specialists
               </h2>
 
               <h3 className="text-lg text-text-500">
-                These are assistant created by your admins are and preferred.
+                These are specialists created by your admins and are preferred.
               </h3>
             </section>
             <div
@@ -370,10 +370,10 @@ export function AssistantsGallery() {
           <section className="mt-12 mb-8 flex flex-col gap-y-2">
             <div className="flex flex-col">
               <h2 className="text-2xl font-semibold text-text-900">
-                Other Assistants
+                Other Specialists
               </h2>
               <h3 className="text-lg text-text-500">
-                These are community-contributed assistants.
+                These are community-contributed Specialists.
               </h3>
             </div>
 

@@ -750,14 +750,40 @@ export function ChatPage({
   const [maxTokens, setMaxTokens] = useState<number>(4096);
 
   // fetch # of allowed document tokens for the selected Persona
+  // useEffect(() => {
+  //   async function fetchMaxTokens() {
+  //     const response = await fetch(
+  //       // CRASH HERE
+  //       `/api/chat/max-selected-document-tokens?persona_id=${liveAssistant.id}`
+  //     );
+  //     if (response.ok) {
+  //       const maxTokens = (await response.json()).max_tokens as number;
+  //       setMaxTokens(maxTokens);
+  //     }
+  //   }
+  //   fetchMaxTokens();
+  // }, [liveAssistant]);
+
   useEffect(() => {
     async function fetchMaxTokens() {
-      const response = await fetch(
-        `/api/chat/max-selected-document-tokens?persona_id=${liveAssistant.id}`
-      );
-      if (response.ok) {
-        const maxTokens = (await response.json()).max_tokens as number;
-        setMaxTokens(maxTokens);
+      if (liveAssistant && liveAssistant.id) {
+        try {
+          const response = await fetch(
+            `/api/chat/max-selected-document-tokens?persona_id=${liveAssistant.id}`
+          );
+          if (response.ok) {
+            const maxTokens = (await response.json()).max_tokens as number;
+            setMaxTokens(maxTokens);
+          } else {
+            console.error('Failed to fetch max tokens. Response:', response);
+          }
+        } catch (error) {
+          console.error('Error fetching max tokens:', error);
+        }
+      } else {
+        console.warn('Live assistant or ID is not available.');
+        // Set a default max token value or handle appropriately
+        setMaxTokens(4096); // Or whatever is an appropriate default
       }
     }
     refreshRecentAssistants(liveAssistant?.id);
@@ -1514,7 +1540,7 @@ export function ChatPage({
       setPopup({
         type: "error",
         message:
-          "The current Assistant does not support image input. Please select an assistant with Vision support.",
+          "The current specialist does not support image input. Please select an specialist with Vision support.",
       });
       return;
     }
@@ -1823,7 +1849,7 @@ export function ChatPage({
         noAssistants && <NoAssistantModal isAdmin={isAdmin} />
       )}
 
-      {/* ChatPopup is a custom popup that displays a admin-specified message on initial user visit. 
+      {/* ChatPopup is a custom popup that displays a admin-specified message on initial user visit.
       Only used in the EE version of the app. */}
       {popup}
 
@@ -1989,12 +2015,12 @@ export function ChatPage({
                         <div
                           style={{ transition: "width 0.30s ease-out" }}
                           className={`
-                          flex-none 
-                          overflow-y-hidden 
-                          bg-background-100 
-                          transition-all 
+                          flex-none
+                          overflow-y-hidden
+                          bg-background-100
+                          transition-all
                           bg-opacity-80
-                          duration-300 
+                          duration-300
                           ease-in-out
                           h-full
                           ${toggledSidebar ? "w-[250px]" : "w-[0px]"}
@@ -2010,7 +2036,7 @@ export function ChatPage({
                           className={`w-full h-full flex flex-col default-scrollbar overflow-y-auto overflow-x-hidden relative`}
                           ref={scrollableDivRef}
                         >
-                          {/* ChatBanner is a custom banner that displays a admin-specified message at 
+                          {/* ChatBanner is a custom banner that displays a admin-specified message at
                       the top of the chat page. Oly used in the EE version of the app. */}
 
                           {messageHistory.length === 0 &&

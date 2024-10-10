@@ -31,6 +31,7 @@ from danswer.auth.users import current_admin_user
 from danswer.auth.users import current_curator_or_admin_user
 from danswer.auth.users import current_user
 from danswer.auth.users import optional_user
+from danswer.auth.users import send_invites
 from danswer.configs.app_configs import AUTH_TYPE
 from danswer.configs.app_configs import ENABLE_EMAIL_INVITES
 from danswer.configs.app_configs import SESSION_EXPIRE_TIME_SECONDS
@@ -225,6 +226,7 @@ def bulk_invite_users(
 
     all_emails = list(set(normalized_emails) | set(initial_invited_users))
     number_of_invited_users = write_invited_users(all_emails)
+    send_invites(normalized_emails)
 
     if not MULTI_TENANT:
         return number_of_invited_users

@@ -95,6 +95,9 @@ from danswer.utils.variable_functionality import fetch_versioned_implementation
 from shared_configs.configs import async_return_default_schema
 from shared_configs.configs import MULTI_TENANT
 from shared_configs.contextvars import CURRENT_TENANT_ID_CONTEXTVAR
+from shared_configs.configs import POSTGRES_DEFAULT_SCHEMA
+
+import time
 
 logger = setup_logger()
 
@@ -198,21 +201,103 @@ def send_user_verification_email(
     token: str,
     mail_from: str = EMAIL_FROM,
 ) -> None:
-    msg = MIMEMultipart()
-    msg["Subject"] = "Danswer Email Verification"
+    msg = MIMEMultipart('alternative')
+    msg["Subject"] = "Buddy Email Verification"
     msg["To"] = user_email
     if mail_from:
         msg["From"] = mail_from
 
     link = f"{WEB_DOMAIN}/auth/verify-email?token={token}"
 
-    body = MIMEText(f"Click the following link to verify your email address: {link}")
-    msg.attach(body)
+    # Plain text version
+    text_content = f"""
+Welcome to Buddy!
+
+Please verify your email address by clicking this link: {link}
+
+For any issues or support, please email us at buddy@enigmas.io
+
+Best regards,
+The Buddy Team
+    """.strip()
+
+    # HTML version with hyperlink
+    html_content = f"""
+<p>Welcome to Buddy!</p>
+
+<p>Please <a href="{link}">click here</a> to verify your email address.</p>
+
+<p>For any issues or support, please email us at <a href="mailto:buddy@enigmas.io">buddy@enigmas.io</a></p>
+
+<p>Kinds regards,<br>
+The Buddy Team</p>
+    """.strip()
+
+    # Attach both versions
+    msg.attach(MIMEText(text_content, 'plain'))
+    msg.attach(MIMEText(html_content, 'html'))
 
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as s:
         s.starttls()
-        # If credentials fails with gmail, check (You need an app password, not just the basic email password)
-        # https://support.google.com/accounts/answer/185833?sjid=8512343437447396151-NA
+        s.login(SMTP_USER, SMTP_PASS)
+        s.send_message(msg)
+
+# Written by Buddy
+def send_invites(emails: list[str]) -> None:
+    # AWS SES has a default rate limit of 1 email/second
+    RATE_LIMIT = 1.0
+
+    for email in emails:
+        send_invite_welcome_email(email)
+        time.sleep(RATE_LIMIT)
+
+# Written by Buddy
+def send_invite_welcome_email(
+    recipient_email: str,
+    mail_from: str = EMAIL_FROM,
+) -> None:
+    msg = MIMEMultipart('alternative')
+    msg["Subject"] = "Welcome to Buddy - You're Invited!"
+    msg["To"] = recipient_email
+    if mail_from:
+        msg["From"] = mail_from
+
+    link = f"{WEB_DOMAIN}/auth/signup"
+
+    # Plain text version
+    text_content = f"""
+Welcome to Buddy!
+
+You have been invited to join Buddy, your AI-powered co-worker.
+
+Click here to join: {link}
+
+For any issues or support, please email us at buddy@enigmas.io
+
+Best regards,
+The Buddy Team
+    """.strip()
+
+    # HTML version with hyperlink
+    html_content = f"""
+<p>Welcome to Buddy!</p>
+
+<p>You have been invited to join Buddy, your AI-powered co-worker.</p>
+
+<p>Please <a href="{link}">click here</a> to join.</p>
+
+<p>For any issues or support, please email us at <a href="mailto:buddy@enigmas.io">buddy@enigmas.io</a></p>
+
+<p>Best regards,<br>
+The Buddy Team</p>
+    """.strip()
+
+    # Attach both versions
+    msg.attach(MIMEText(text_content, 'plain'))
+    msg.attach(MIMEText(html_content, 'html'))
+
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as s:
+        s.starttls()
         s.login(SMTP_USER, SMTP_PASS)
         s.send_message(msg)
 

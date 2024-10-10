@@ -246,10 +246,10 @@ export function AssistantEditor({
         validationSchema={Yup.object()
           .shape({
             name: Yup.string().required(
-              "Must provide a name for the Assistant"
+              "Must provide a name for the Specialist"
             ),
             description: Yup.string().required(
-              "Must provide a description for the Assistant"
+              "Must provide a description for the Specialist"
             ),
             system_prompt: Yup.string(),
             task_prompt: Yup.string(),
@@ -381,7 +381,7 @@ export function AssistantEditor({
           }
 
           if (!personaResponse) {
-            error = "Failed to create Assistant - no response received";
+            error = "Failed to create Specialist - no response received";
           } else if (!personaResponse.ok) {
             error = await personaResponse.text();
           }
@@ -389,7 +389,7 @@ export function AssistantEditor({
           if (error || !personaResponse) {
             setPopup({
               type: "error",
-              message: `Failed to create Assistant - ${error}`,
+              message: `Failed to create Specialist - ${error}`,
             });
             formikHelpers.setSubmitting(false);
           } else {
@@ -451,7 +451,7 @@ export function AssistantEditor({
           );
 
           return (
-            <Form className="w-full text-text-950">
+            <Form className="bg-background w-full text-text-950">
               <div className="w-full flex gap-x-2 justify-center">
                 <Popover
                   open={isIconDropdownOpen}
@@ -469,14 +469,14 @@ export function AssistantEditor({
                       {values.uploaded_image ? (
                         <img
                           src={URL.createObjectURL(values.uploaded_image)}
-                          alt="Uploaded assistant icon"
+                          alt="Uploaded specialist icon"
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : existingPersona?.uploaded_image_id &&
                         !removePersonaImage ? (
                         <img
                           src={buildImgUrl(existingPersona?.uploaded_image_id)}
-                          alt="Uploaded assistant icon"
+                          alt="Uploaded specialist icon"
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : (
@@ -493,7 +493,7 @@ export function AssistantEditor({
                     </div>
                   }
                   popover={
-                    <div className="bg-white text-text-800 flex flex-col gap-y-1 w-[300px] border border-border rounded-lg shadow-lg p-2">
+                    <div className="text-text-800 flex flex-col gap-y-1 w-[300px] border border-border rounded-lg shadow-lg p-2">
                       <label className="block w-full flex gap-x-2 text-left items-center px-4 py-2 hover:bg-background-100 rounded cursor-pointer">
                         <CameraIcon />
                         Upload {values.uploaded_image && " New "} Photo
@@ -591,7 +591,9 @@ export function AssistantEditor({
                       <FiInfo size={12} />
                     </TooltipTrigger>
                     <TooltipContent side="top" align="center">
-                      This icon will visually represent your Assistant
+                      <p className="bg-background-900 max-w-[200px] mb-1 text-sm rounded-lg p-1.5 text-white">
+                        This icon will visually represent your Specialist
+                      </p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -599,24 +601,24 @@ export function AssistantEditor({
 
               <TextFormField
                 name="name"
-                tooltip="Used to identify the Assistant in the UI."
+                tooltip="Used to identify the Specialist in the UI."
                 label="Name"
-                placeholder="e.g. 'Email Assistant'"
+                placeholder="e.g. 'Email Specialist'"
               />
 
               <TextFormField
-                tooltip="Used for identifying assistants and their use cases."
+                tooltip="Used for identifying specialist and their use cases."
                 name="description"
                 label="Description"
-                placeholder="e.g. 'Use this Assistant to help draft professional emails'"
+                placeholder="e.g. 'Use this Specialist to help draft professional emails'"
               />
 
               <TextFormField
-                tooltip="Gives your assistant a prime directive"
+                tooltip="Gives your specialist a prime directive"
                 name="system_prompt"
                 label="Instructions"
                 isTextArea={true}
-                placeholder="e.g. 'You are a professional email writing assistant that always uses a polite enthusiastic tone, emphasizes action items, and leaves blanks for the human to fill in when you have unknowns'"
+                placeholder="e.g. 'You are a professional email writing specialist that always uses a polite enthusiastic tone, emphasizes action items, and leaves blanks for the human to fill in when you have unknowns'"
                 onChange={(e) => {
                   setFieldValue("system_prompt", e.target.value);
                 }}
@@ -633,14 +635,16 @@ export function AssistantEditor({
                         <FiInfo size={12} />
                       </TooltipTrigger>
                       <TooltipContent side="top" align="center">
-                        Select a Large Language Model (Generative AI model) to
-                        power this Assistant
+                        <p className="bg-background-900 max-w-[200px] mb-1 text-sm rounded-lg p-1.5 text-white">
+                          Select a Buddy to
+                          power this Specialist
+                        </p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 </div>
                 <p className="my-1 font-description text-base text-text-400">
-                  Your assistant will use the user&apos;s set default unless
+                  Your specialist will use the user&apos;s set default unless
                   otherwise specified below.
                   {admin &&
                     user?.preferences.default_model &&
@@ -728,8 +732,10 @@ export function AssistantEditor({
                         <FiInfo size={12} />
                       </TooltipTrigger>
                       <TooltipContent side="top" align="center">
-                        You can give your assistant advanced capabilities like
-                        image generation
+                        <p className="bg-background-900 max-w-[200px] mb-1 text-sm rounded-lg p-1.5 text-white">
+                          You can give your specialist advanced capabilities like
+                          image generation
+                        </p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -770,7 +776,7 @@ export function AssistantEditor({
                             <p className="bg-background-900 max-w-[200px] mb-1 text-sm rounded-lg p-1.5 text-white">
                               To use Image Generation, select GPT-4o or another
                               image compatible model as the default model for
-                              this Assistant.
+                              this Specialist.
                             </p>
                           </TooltipContent>
                         ) : (
@@ -845,8 +851,8 @@ export function AssistantEditor({
                                       ) : (
                                         "Document Sets"
                                       )}{" "}
-                                      this Assistant should search through. If
-                                      none are specified, the Assistant will
+                                      this specialist should search through. If
+                                      none are specified, the specialist will
                                       search through all available documents in
                                       order to try and respond to queries.
                                     </>
@@ -893,7 +899,7 @@ export function AssistantEditor({
                                       <>
                                         If this functionality would be useful,
                                         reach out to the administrators of
-                                        Danswer for assistance.
+                                        Buddy for assistance.
                                       </>
                                     )}
                                   </p>
@@ -946,9 +952,9 @@ export function AssistantEditor({
                                     name="include_citations"
                                     label="Include Citations"
                                     subtext={`
-                                      If set, the response will include bracket citations ([1], [2], etc.) 
-                                      for each document used by the LLM to help inform the response. This is 
-                                      the same technique used by the default Assistants. In general, we recommend 
+                                      If set, the response will include bracket citations ([1], [2], etc.)
+                                      for each document used by the LLM to help inform the response. This is
+                                      the same technique used by the default specialists. In general, we recommend
                                       to leave this enabled in order to increase trust in the LLM answer.`}
                                   />
                                 </div>
@@ -1192,7 +1198,7 @@ export function AssistantEditor({
                           setFieldValue("task_prompt", e.target.value);
                         }}
                         explanationText="Learn about prompting in our docs!"
-                        explanationLink="https://docs.danswer.dev/guides/assistants"
+                        explanationLink="https://doc.enigmas.io/admin-panel/markdown"
                       />
                     </>
                   )}
@@ -1237,13 +1243,13 @@ export function AssistantEditor({
                                           <Field
                                             name={`starter_messages[${index}].name`}
                                             className={`
-                                            border 
-                                            border-border 
-                                            bg-background 
-                                            rounded 
-                                            w-full 
-                                            py-2 
-                                            px-3 
+                                            border
+                                            border-border
+                                            bg-background
+                                            rounded
+                                            w-full
+                                            py-2
+                                            px-3
                                             mr-4
                                           `}
                                             autoComplete="off"
@@ -1268,14 +1274,13 @@ export function AssistantEditor({
                                           <Field
                                             name={`starter_messages[${index}].message`}
                                             className={`
-                                              border 
-                                              border-border 
-                                              bg-background 
-                                              rounded 
-                                              w-full 
-                                              py-2 
-                                              px-3 
-                                              min-h-12
+                                              border
+                                              border-border
+                                              bg-background
+                                              rounded
+                                              w-full
+                                              py-2
+                                              px-3
                                               mr-4
                                               line-clamp-
                                           `}
@@ -1329,7 +1334,7 @@ export function AssistantEditor({
                       setFieldValue,
                       ...formikProps,
                     }}
-                    objectName="assistant"
+                    objectName="Specialist"
                     enforceGroupSelection={false}
                   />
                 </>

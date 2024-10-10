@@ -38,10 +38,9 @@ export const AnimatedToggle = ({
 
   return (
     <CustomTooltip
-      light
       large
       content={
-        <div className="bg-white my-auto p-6 rounded-lg w-full">
+        <div className="bg-background my-auto p-6 rounded-lg w-full">
           <h2 className="text-xl text-text-800 font-bold mb-2">
             Agentic Search
           </h2>
@@ -68,7 +67,7 @@ export const AnimatedToggle = ({
           {/* Toggle switch */}
           <div
             className={`
-            w-10 h-6 flex items-center rounded-full p-1 transition-all duration-300 ease-in-out 
+            w-10 h-6 flex items-center rounded-full p-1 transition-all duration-300 ease-in-out
             ${isOn ? "bg-toggled-background" : "bg-untoggled-background"}
           `}
           >
@@ -199,9 +198,9 @@ export const FullSearchBar = ({
           )}
         </div>
         <div className="flex-shrink-0 flex items-center my-auto gap-x-3">
-          {toggleAgentic && (
+          {/* {toggleAgentic && (
             <AnimatedToggle isOn={agentic!} handleToggle={toggleAgentic} />
-          )}
+          )} */}
           <div className="my-auto pl-2">
             <button
               disabled={disabled}

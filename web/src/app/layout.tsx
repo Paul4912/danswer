@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: enterpriseSettings?.application_name ?? "Danswer",
+    title: enterpriseSettings?.application_name ?? "Buddy",
     description: "Question answering for your documents",
     icons: {
       icon: logoLocation,
@@ -65,7 +65,6 @@ export default async function RootLayout({
 
   const productGating =
     combinedSettings?.settings.product_gating ?? GatingType.NONE;
-
   const getPageContent = (content: React.ReactNode) => (
     <html lang="en" className={`${inter.variable} font-sans`}>
       <head>
@@ -115,14 +114,14 @@ export default async function RootLayout({
     return getPageContent(
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="mb-2 flex items-center max-w-[175px]">
-          <HeaderTitle>Danswer</HeaderTitle>
+          <HeaderTitle>Buddy</HeaderTitle>
           <Logo height={40} width={40} />
         </div>
 
         <CardSection className="max-w-md">
           <h1 className="text-2xl font-bold mb-4 text-error">Error</h1>
           <p className="text-text-500">
-            Your Danswer instance was not configured properly and your settings
+            Your Buddy instance was not configured properly and your settings
             could not be loaded. This could be due to an admin configuration
             issue or an incomplete setup.
           </p>
@@ -130,25 +129,24 @@ export default async function RootLayout({
             If you&apos;re an admin, please check{" "}
             <a
               className="text-link"
-              href="https://docs.danswer.dev/introduction?utm_source=app&utm_medium=error_page&utm_campaign=config_error"
+              href="https://doc.enigmas.io/"
               target="_blank"
               rel="noopener noreferrer"
             >
               our docs
             </a>{" "}
-            to see how to configure Danswer properly. If you&apos;re a user,
+            to see how to configure Buddy properly. If you&apos;re a user,
             please contact your admin to fix this error.
           </p>
           <p className="mt-4">
-            For additional support and guidance, you can reach out to our
-            community on{" "}
+            For additional support and guidance, you can email us at{" "}
             <a
               className="text-link"
-              href="https://danswer.ai?utm_source=app&utm_medium=error_page&utm_campaign=config_error"
+              href="mailto:admin@enigmas.io"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Slack
+              admin@enigmas.io
             </a>
             .
           </p>
@@ -160,7 +158,7 @@ export default async function RootLayout({
     return getPageContent(
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="mb-2 flex items-center max-w-[175px]">
-          <HeaderTitle>Danswer</HeaderTitle>
+          <HeaderTitle>Buddy</HeaderTitle>
           <Logo height={40} width={40} />
         </div>
         <CardSection className="w-full max-w-md">
@@ -168,11 +166,11 @@ export default async function RootLayout({
             Access Restricted
           </h1>
           <p className="text-text-500 mb-4">
-            We regret to inform you that your access to Danswer has been
+            We regret to inform you that your access to Buddy has been
             temporarily suspended due to a lapse in your subscription.
           </p>
           <p className="text-text-500 mb-4">
-            To reinstate your access and continue benefiting from Danswer&apos;s
+            To reinstate your access and continue benefiting from Buddy&apos;s
             powerful features, please update your payment information.
           </p>
           <p className="text-text-500">

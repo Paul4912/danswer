@@ -36,11 +36,11 @@ const ToggleSwitch = () => {
   };
 
   return (
-    <div className="bg-background-toggle mobile:mt-8 flex rounded-full p-1">
+    <div className="bg-background-200 mobile:mt-8 flex rounded-full p-1">
       <div
         className={`absolute mobile:mt-8 top-1 bottom-1 ${
           activeTab === "chat" ? "w-[45%]" : "w-[50%]"
-        } bg-white rounded-full shadow ${
+        } bg-background-400 rounded-full shadow ${
           isInitialLoad ? "" : "transition-transform duration-300 ease-in-out"
         } ${activeTab === "chat" ? "translate-x-[115%]" : "translate-x-[1%]"}`}
       />
@@ -53,7 +53,7 @@ const ToggleSwitch = () => {
         onClick={() => handleTabChange("search")}
       >
         <SearchIcon size={16} className="mr-2" />
-        <div className="flex  items-center">
+        <div className="flex  items-center text-text-900">
           Search
           <div className="ml-2 flex content-center">
             <span className="leading-none pb-[1px] my-auto">
@@ -155,7 +155,7 @@ export default function FunctionalWrapper({
           <div
             style={{ transition: "width 0.30s ease-out" }}
             className={`flex-none overflow-y-hidden bg-background-100 transition-all bg-opacity-80 duration-300 ease-in-out h-full
-                        ${toggledSidebar ? "w-[250px] " : "w-[0px]"}`}
+                        ${toggledSidebar ? "w-[260px] " : "w-[0px]"}`}
           />
           <div className="relative">
             <ToggleSwitch />

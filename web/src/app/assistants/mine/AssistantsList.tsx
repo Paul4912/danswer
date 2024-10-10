@@ -138,7 +138,7 @@ function AssistantListItem({
         <div className="flex justify-between items-center">
           <AssistantIcon assistant={assistant} />
 
-          <h2 className="ml-6 w-fit flex-grow space-y-3 text-start flex text-xl font-semibold line-clamp-2 text-gray-800">
+          <h2 className="ml-6 w-fit flex-grow space-y-3 text-start flex text-xl font-semibold line-clamp-2">
             {assistant.name}
           </h2>
 
@@ -389,7 +389,7 @@ export function AssistantsList() {
       )}
 
       <div className="mx-auto w-searchbar-xs 2xl:w-searchbar-sm 3xl:w-searchbar">
-        <AssistantsPageTitle>Your Assistants</AssistantsPageTitle>
+        <AssistantsPageTitle>Your Specialists</AssistantsPageTitle>
 
         <div className="grid grid-cols-2 gap-4 mt-4 mb-8">
           <Button
@@ -398,7 +398,7 @@ export function AssistantsList() {
             onClick={() => router.push("/assistants/new")}
             icon={FiPlus}
           >
-            Create New Assistant
+            Create New Specialist
           </Button>
 
           <Button
@@ -407,18 +407,18 @@ export function AssistantsList() {
             className="text-base py-6"
             icon={FiList}
           >
-            Assistant Gallery
+            Specialist Gallery
           </Button>
         </div>
 
         <h2 className="text-2xl font-semibold mb-2 text-text-900">
-          Active Assistants
+          Active Specialists
         </h2>
 
         <h3 className="text-lg text-text-500">
-          The order the assistants appear below will be the order they appear in
-          the Assistants dropdown. The first assistant listed will be your
-          default assistant when you start a new chat. Drag and drop to reorder.
+          The order the specialists appear below will be the order they appear in
+          the specialists dropdown. The first specialist listed will be your
+          default specialist when you start a new chat. Drag and drop to reorder.
         </h3>
 
         <DndContext
@@ -453,11 +453,11 @@ export function AssistantsList() {
           <>
             <Separator />
 
-            <h3 className="text-xl font-bold mb-4">Your Hidden Assistants</h3>
+            <h3 className="text-xl font-bold mb-4">Your Hidden Specialists</h3>
 
             <h3 className="text-lg text-text-500">
-              Assistants you&apos;ve created that aren&apos;t currently visible
-              in the Assistants selector.
+              Specialists you&apos;ve created that aren&apos;t currently visible
+              in the Specialists selector.
             </h3>
 
             <div className="w-full p-4">
