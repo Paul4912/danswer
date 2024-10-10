@@ -40,7 +40,7 @@ export const LlmTab = forwardRef<HTMLDivElement, LlmTabProps>(
     const [isTemperatureExpanded, setIsTemperatureExpanded] = useState(false);
 
     return (
-      <div className="w-full">
+      <div className="w-full !bg-background">
         <div className="flex w-full justify-between content-center mb-2 gap-x-2">
           <label className="block text-sm font-medium">Choose Model</label>
           <button

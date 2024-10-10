@@ -56,7 +56,7 @@ export const AnimatedToggle = ({
             <div ref={contentRef} className="flex items-center">
               <div
                 className={`
-                w-10 h-6 flex items-center rounded-full p-1 transition-all duration-300 ease-in-out 
+                w-10 h-6 flex items-center rounded-full p-1 transition-all duration-300 ease-in-out
                 ${isOn ? "bg-toggled-background" : "bg-untoggled-background"}
               `}
               >
@@ -209,9 +209,9 @@ export const FullSearchBar = ({
           )}
         </div>
         <div className="flex-shrink-0 flex items-center my-auto gap-x-3">
-          {toggleAgentic && (
+          {/* {toggleAgentic && (
             <AnimatedToggle isOn={agentic!} handleToggle={toggleAgentic} />
-          )}
+          )} */}
           <div className="my-auto pl-2">
             <button
               disabled={disabled}

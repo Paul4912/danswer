@@ -32,7 +32,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         </CardSection>
 
         <div className="mt-12">
-          <Title>Delete Assistant</Title>
+          <Title>Delete Specialist</Title>
 
           <div className="flex mt-6">
             <DeletePersonaButton
@@ -48,7 +48,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   return (
     <div className="w-full">
       <BackButton />
-      <AdminPageTitle title="Edit Assistant" icon={<RobotIcon size={32} />} />
+      <AdminPageTitle title="Edit Specialist" icon={<RobotIcon size={32} />} />
       {body}
     </div>
   );

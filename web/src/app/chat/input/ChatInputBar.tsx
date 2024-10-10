@@ -285,6 +285,46 @@ export function ChatInputBar({
           )}
 
           {/* <div>
+          {showPrompts && (
+            <div
+              ref={suggestionsRef}
+              className="text-sm absolute inset-x-0 top-0 w-full transform -translate-y-full"
+            >
+              <div className="rounded-lg py-1.5 border border-border-medium overflow-hidden shadow-lg mx-2 px-1.5 mt-2 rounded z-10">
+                {filteredPrompts.map((currentPrompt, index) => (
+                  <button
+                    key={index}
+                    className={`px-2 ${
+                      tabbingIconIndex == index && "bg-hover"
+                    } rounded content-start flex gap-x-1 py-1.5 w-full  hover:bg-hover cursor-pointer`}
+                    onClick={() => {
+                      updateInputPrompt(currentPrompt);
+                    }}
+                  >
+                    <p className="font-bold">{currentPrompt.prompt}:</p>
+                    <p className="text-left flex-grow mr-auto line-clamp-1">
+                      {currentPrompt.id == selectedAssistant.id && "(default) "}
+                      {currentPrompt.content?.trim()}
+                    </p>
+                  </button>
+                ))}
+
+                <a
+                  key={filteredPrompts.length}
+                  target="_self"
+                  className={`${
+                    tabbingIconIndex == filteredPrompts.length && "bg-hover"
+                  } px-3 flex gap-x-1 py-2 w-full  items-center  hover:bg-hover-light cursor-pointer"`}
+                  href="/prompts"
+                >
+                  <FiPlus size={17} />
+                  <p>Create a new prompt</p>
+                </a>
+              </div>
+            </div>
+          )}
+
+          <div>
             <SelectedFilterDisplay filterManager={filterManager} />
           </div> */}
 
@@ -299,7 +339,7 @@ export function ChatInputBar({
               flex
               flex-col
               border
-              border-[#E5E7EB]
+              border-border-medium
               rounded-lg
               text-text-chatbar
               bg-background-chatbar

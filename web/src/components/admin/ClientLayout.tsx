@@ -132,7 +132,7 @@ export function ClientLayout({
                 ],
               },
               {
-                name: "Custom Assistants",
+                name: "Custom Specialists",
                 items: [
                   {
                     name: (
@@ -141,7 +141,7 @@ export function ClientLayout({
                           className="text-icon-settings-sidebar"
                           size={18}
                         />
-                        <div className="ml-1">Assistants</div>
+                        <div className="ml-1">Specialists</div>
                       </div>
                     ),
                     link: "/admin/assistants",

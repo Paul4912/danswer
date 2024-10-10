@@ -127,13 +127,13 @@ export const CustomTooltip = ({
           <div
             className={`min-w-8 fixed z-[1000] ${
               citation ? "max-w-[350px]" : "w-40"
-            } ${large ? (medium ? "w-88" : "w-96") : line && "max-w-64 w-auto"} 
-            transform -translate-x-1/2 text-sm 
+            } ${large ? (medium ? "w-88" : "w-96") : line && "max-w-64 w-auto"}
+            transform -translate-x-1/2 text-sm
             ${
               light
-                ? "text-text-800 bg-background-200"
-                : "text-white bg-background-800"
-            } 
+                ? "text-gray-800 bg-background-200"
+                : "text-white bg-background-200"
+            }
             rounded-lg shadow-lg`}
             style={{
               top: `${tooltipPosition.top}px`,
@@ -144,7 +144,7 @@ export const CustomTooltip = ({
               <div
                 className={`absolute w-3 h-3 ${
                   position === "top" ? "bottom-1.5" : "-top-1.5"
-                } left-1/2 transform -translate-x-1/2 rotate-45 
+                } left-1/2 transform -translate-x-1/2 rotate-45
                 ${light ? "bg-background-200" : "bg-background-800"}`}
               />
             )}

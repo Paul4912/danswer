@@ -18,6 +18,20 @@ module.exports = {
     transparent: "transparent",
     current: "currentColor",
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            '--tw-prose-headings': '#ffffff',
+            '--tw-prose-body': '#cccccc',
+            '--tw-prose-links': '#7ab0ff',
+            '--tw-prose-bold': '#ffffff',
+            '--tw-prose-pre-bg': '#1e293b',
+            '--tw-prose-pre-code': '#d1d5db',
+            '--tw-prose-quote-borders': '#444444',
+          },
+        },
+      },
+
       transitionProperty: {
         spacing: "margin, padding",
       },
@@ -99,15 +113,8 @@ module.exports = {
         "background-inverted": "var(--background-inverted)",
         "background-emphasis": "var(--background-emphasis)",
         "background-strong": "var(--background-strong)",
-        "background-search": "var(--white)",
-
-        "background-history-sidebar-button-hover": "var(--background-200)",
-        "text-history-sidebar-button": "var(--text-800)",
-        "divider-history-sidebar-bar": "var(--border)",
-        "text-mobile-sidebar": "var(--text-800)",
-        "background-search-filter": "var(--background-100)",
-        "background-search-filter-dropdown": "var(--background-100)",
-
+        // "background-search": "var(--white)",
+        "background-search": "var(--background-100)",
         // colors for sidebar in chat, search, and manage settings
         "background-sidebar": "var(--background-100)",
         "background-chatbar": "var(--background-100)",
@@ -158,7 +165,8 @@ module.exports = {
         "submit-background": "var(--background-800)",
         "disabled-submit-background": "var(--background-400)",
 
-        input: "var(--white)",
+        // input: "var(--white)",
+        input: "var(--background-100)",
 
         "text-50": "var(--text-50)",
         "text-100": "var(--text-100)",

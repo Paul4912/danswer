@@ -597,7 +597,7 @@ export const AIMessage = ({
                         translate-y-2 ${
                           (isHovering || settings?.isMobile) && "!translate-y-0"
                         }
-                        transition-transform duration-300 ease-in-out 
+                        transition-transform duration-300 ease-in-out
                         flex md:flex-row gap-x-0.5 bg-background-125/40 -mx-1.5 p-1.5 rounded-lg
                         `}
                       >
@@ -786,9 +786,9 @@ export const HumanMessage = ({
                       w-full
                       flex
                       flex-col
-                      border 
-                      border-border 
-                      rounded-lg 
+                      border
+                      border-border
+                      rounded-lg
                       bg-background-emphasis
                       pb-2
                       [&:has(textarea:focus)]::ring-1
@@ -798,23 +798,23 @@ export const HumanMessage = ({
                       <textarea
                         ref={textareaRef}
                         className={`
-                        m-0 
-                        w-full 
+                        m-0
+                        w-full
                         h-auto
                         shrink
                         border-0
-                        rounded-lg 
+                        rounded-lg
                         overflow-y-hidden
-                        bg-background-emphasis 
-                        whitespace-normal 
+                        bg-background-emphasis
+                        whitespace-normal
                         break-word
                         overscroll-contain
-                        outline-none 
-                        placeholder-gray-400 
+                        outline-none
+                        placeholder-gray-400
                         resize-none
                         pl-4
                         overflow-y-auto
-                        pr-12 
+                        pr-12
                         py-4`}
                         aria-multiline
                         role="textarea"
@@ -841,15 +841,15 @@ export const HumanMessage = ({
                         <button
                           className={`
                           w-fit
-                          bg-accent 
-                          text-inverted 
+                          bg-accent
+                          text-inverted
                           text-sm
-                          rounded-lg 
-                          inline-flex 
-                          items-center 
-                          justify-center 
-                          flex-shrink-0 
-                          font-medium 
+                          rounded-lg
+                          inline-flex
+                          items-center
+                          justify-center
+                          flex-shrink-0
+                          font-medium
                           min-h-[38px]
                           py-2
                           px-3
@@ -861,17 +861,17 @@ export const HumanMessage = ({
                         </button>
                         <button
                           className={`
-                          inline-flex 
-                          items-center 
-                          justify-center 
-                          flex-shrink-0 
-                          font-medium 
-                          min-h-[38px] 
-                          py-2 
-                          px-3 
-                          w-fit 
+                          inline-flex
+                          items-center
+                          justify-center
+                          flex-shrink-0
+                          font-medium
+                          min-h-[38px]
+                          py-2
+                          px-3
+                          w-fit
                           bg-hover
-                          bg-background-strong 
+                          bg-background-strong
                           text-sm
                           rounded-lg
                           hover:bg-hover-emphasis

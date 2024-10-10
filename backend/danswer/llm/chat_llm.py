@@ -1,6 +1,7 @@
 import json
 import os
 import traceback
+import time
 from collections.abc import Iterator
 from collections.abc import Sequence
 from typing import Any
@@ -454,7 +455,24 @@ class DefaultMultiLLM(LLM):
             self.log_model_configs()
 
         if DISABLE_LITELLM_STREAMING:
-            yield self.invoke(prompt, tools, tool_choice, structured_response_format)
+            full_message = self.invoke(prompt, tools, tool_choice, structured_response_format)
+
+            if isinstance(full_message, AIMessage):
+                content = full_message.content or ""
+                chunk_size = 50
+                chunks = [content[i:i+chunk_size] for i in range(0, len(content), chunk_size)]
+
+                for i, text_chunk in enumerate(chunks):
+                    # Simulate a delay to mimic streaming
+                    time.sleep(0.1)  # adjust the duration as needed
+                    yield AIMessageChunk(
+                        content=text_chunk,
+                        additional_kwargs={"usage_metadata": {"stop": None}}
+                    )
+            else:
+                # No streaming needed for non-AI messages, just yield directly
+                yield full_message
+
             return
 
         output = None

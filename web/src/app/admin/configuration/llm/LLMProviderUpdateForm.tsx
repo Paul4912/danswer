@@ -44,6 +44,12 @@ export function LLMProviderUpdateForm({
 
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
 
+   // Filtering the llm_names array to include only models containing "llama"
+   const llamaModels = llmProviderDescriptor.llm_names.filter((name) =>
+    name.toLowerCase().includes("llama")
+  );
+
+
   // Define the initial values based on the provider's requirements
   const initialValues = {
     name: existingLlmProvider?.name || (hideAdvanced ? "Default" : ""),
@@ -89,20 +95,20 @@ export function LLMProviderUpdateForm({
       : Yup.string(),
     ...(llmProviderDescriptor.custom_config_keys
       ? {
-          custom_config: Yup.object(
-            llmProviderDescriptor.custom_config_keys.reduce(
-              (acc, customConfigKey) => {
-                if (customConfigKey.is_required) {
-                  acc[customConfigKey.name] = Yup.string().required(
-                    `${customConfigKey.name} is required`
-                  );
-                }
-                return acc;
-              },
-              {} as { [key: string]: Yup.StringSchema }
-            )
-          ),
-        }
+        custom_config: Yup.object(
+          llmProviderDescriptor.custom_config_keys.reduce(
+            (acc, customConfigKey) => {
+              if (customConfigKey.is_required) {
+                acc[customConfigKey.name] = Yup.string().required(
+                  `${customConfigKey.name} is required`
+                );
+              }
+              return acc;
+            },
+            {} as { [key: string]: Yup.StringSchema }
+          )
+        ),
+      }
       : {}),
     deployment_name: llmProviderDescriptor.deployment_name_required
       ? Yup.string().required("Deployment Name is required")
@@ -146,8 +152,7 @@ export function LLMProviderUpdateForm({
         }
 
         const response = await fetch(
-          `${LLM_PROVIDERS_ADMIN_URL}${
-            existingLlmProvider ? "" : "?is_creation=true"
+          `${LLM_PROVIDERS_ADMIN_URL}${existingLlmProvider ? "" : "?is_creation=true"
           }`,
           {
             method: "PUT",
@@ -283,7 +288,7 @@ export function LLMProviderUpdateForm({
                   name="default_model_name"
                   subtext="The model to use by default for this provider unless otherwise specified."
                   label="Default Model"
-                  options={llmProviderDescriptor.llm_names.map((name) => ({
+                  options={llamaModels.map((name) => ({
                     name: getDisplayNameForModel(name),
                     value: name,
                   }))}
@@ -309,11 +314,11 @@ export function LLMProviderUpdateForm({
                 (llmProviderDescriptor.llm_names.length > 0 ? (
                   <SelectorFormField
                     name="fast_default_model_name"
-                    subtext={`The model to use for lighter flows like \`LLM Chunk Filter\` 
-                for this provider. If \`Default\` is specified, will use 
+                    subtext={`The model to use for lighter flows like \`LLM Chunk Filter\`
+                for this provider. If \`Default\` is specified, will use
                 the Default Model configured above.`}
                     label="[Optional] Fast Model"
-                    options={llmProviderDescriptor.llm_names.map((name) => ({
+                    options={llamaModels.map((name) => ({
                       name: getDisplayNameForModel(name),
                       value: name,
                     }))}
@@ -323,8 +328,8 @@ export function LLMProviderUpdateForm({
                 ) : (
                   <TextFormField
                     name="fast_default_model_name"
-                    subtext={`The model to use for lighter flows like \`LLM Chunk Filter\` 
-                for this provider. If \`Default\` is specified, will use 
+                    subtext={`The model to use for lighter flows like \`LLM Chunk Filter\`
+                for this provider. If \`Default\` is specified, will use
                 the Default Model configured above.`}
                     label="[Optional] Fast Model"
                     placeholder="E.g. gpt-4"
@@ -352,7 +357,7 @@ export function LLMProviderUpdateForm({
                         name="display_model_names"
                         label="Display Models"
                         subtext="Select the models to make available to users. Unselected models will not be available."
-                        options={llmProviderDescriptor.llm_names.map(
+                        options={ llmProviderDescriptor.llm_names.map(
                           (name) => ({
                             value: name,
                             label: getDisplayNameForModel(name),
