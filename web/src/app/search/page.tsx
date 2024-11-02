@@ -10,10 +10,16 @@ import { CCPairBasicInfo, DocumentSet, Tag, User } from "@/lib/types";
 import { cookies } from "next/headers";
 import { SearchType } from "@/lib/search/interfaces";
 import { Persona } from "../admin/assistants/interfaces";
+import {
+  WelcomeModal,
+  hasCompletedWelcomeFlowSS,
+} from "@/components/initialSetup/welcome/WelcomeModalWrapper";
 import { unstable_noStore as noStore } from "next/cache";
 import { InstantSSRAutoRefresh } from "@/components/SSRAutoRefresh";
 import { personaComparator } from "../admin/assistants/lib";
 import { FullEmbeddingModelResponse } from "@/components/embedding/interfaces";
+import { NoSourcesModal } from "@/components/initialSetup/search/NoSourcesModal";
+import { NoCompleteSourcesModal } from "@/components/initialSetup/search/NoCompleteSourceModal";
 import { ChatPopup } from "../chat/ChatPopup";
 import {
   FetchAssistantsResponse,
@@ -32,10 +38,6 @@ import { fetchLLMProvidersSS } from "@/lib/llm/fetchLLMs";
 import { LLMProviderDescriptor } from "../admin/configuration/llm/interfaces";
 import { AssistantsProvider } from "@/components/context/AssistantsContext";
 import { headers } from "next/headers";
-import {
-  hasCompletedWelcomeFlowSS,
-  WelcomeModal,
-} from "@/components/initialSetup/welcome/WelcomeModalWrapper";
 
 export default async function Home({
   searchParams,
@@ -168,6 +170,14 @@ export default async function Home({
     ccPairs.length === 0 &&
     !shouldShowWelcomeModal;
 
+  const shouldDisplaySourcesIncompleteModal =
+    !ccPairs.some(
+      (ccPair) => ccPair.has_successful_run && ccPair.docs_indexed > 0
+    ) &&
+    !shouldDisplayNoSourcesModal &&
+    !shouldShowWelcomeModal &&
+    (!user || user.role == "admin");
+
   const sidebarToggled = cookies().get(SIDEBAR_TOGGLED_COOKIE_NAME);
   const agenticSearchToggle = cookies().get(AGENTIC_SEARCH_TYPE_COOKIE_NAME);
 
@@ -182,30 +192,41 @@ export default async function Home({
   return (
     <>
       <HealthCheckBanner />
-      <InstantSSRAutoRefresh />
       {shouldShowWelcomeModal && <WelcomeModal user={user} />}
+      <InstantSSRAutoRefresh />
+      {shouldDisplayNoSourcesModal && <NoSourcesModal />}
+      {shouldDisplaySourcesIncompleteModal && (
+        <NoCompleteSourcesModal ccPairs={ccPairs} />
+      )}
       {/* ChatPopup is a custom popup that displays a admin-specified message on initial user visit. 
       Only used in the EE version of the app. */}
       <ChatPopup />
-      <SearchProvider
-        value={{
-          querySessions,
-          ccPairs,
-          documentSets,
-          assistants,
-          tags,
-          agenticSearchEnabled,
-          disabledAgentic: DISABLE_LLM_DOC_RELEVANCE,
-          initiallyToggled: toggleSidebar,
-          shouldShowWelcomeModal,
-          shouldDisplayNoSources: shouldDisplayNoSourcesModal,
-        }}
+      <AssistantsProvider
+        initialAssistants={assistants}
+        hasAnyConnectors={hasAnyConnectors}
+        hasImageCompatibleModel={false}
       >
-        <WrappedSearch
-          initiallyToggled={toggleSidebar}
-          searchTypeDefault={searchTypeDefault}
-        />
-      </SearchProvider>
+        <SearchProvider
+          value={{
+            querySessions,
+            ccPairs,
+            documentSets,
+            assistants,
+            tags,
+            agenticSearchEnabled,
+            disabledAgentic: DISABLE_LLM_DOC_RELEVANCE,
+            initiallyToggled: toggleSidebar,
+            shouldShowWelcomeModal,
+            shouldDisplayNoSources: shouldDisplayNoSourcesModal,
+          }}
+        >
+          <WrappedSearch
+            initiallyToggled={toggleSidebar}
+            searchTypeDefault={searchTypeDefault}
+          />
+        </SearchProvider>
+      </AssistantsProvider>
+      s
     </>
   );
 }

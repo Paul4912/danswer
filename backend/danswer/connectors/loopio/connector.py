@@ -161,7 +161,7 @@ class LoopioConnector(LoadConnector, PollConnector):
                 ]
                 doc_batch.append(
                     Document(
-                        id=str(entry["id"]),
+                        id=entry["id"],
                         sections=[Section(link=link, text=content_text)],
                         source=DocumentSource.LOOPIO,
                         semantic_identifier=questions[0],

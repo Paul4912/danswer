@@ -37,6 +37,7 @@ interface FetchChatDataResult {
   ccPairs: CCPairBasicInfo[];
   availableSources: ValidSources[];
   documentSets: DocumentSet[];
+  assistants: Persona[];
   tags: Tag[];
   llmProviders: LLMProviderDescriptor[];
   folders: Folder[];
@@ -46,6 +47,8 @@ interface FetchChatDataResult {
   finalDocumentSidebarInitialWidth?: number;
   shouldShowWelcomeModal: boolean;
   userInputPrompts: InputPrompt[];
+  hasAnyConnectors: boolean;
+  hasImageCompatibleModel: boolean;
 }
 
 export async function fetchChatData(searchParams: {
@@ -56,6 +59,7 @@ export async function fetchChatData(searchParams: {
     getCurrentUserSS(),
     fetchSS("/manage/indexing-status"),
     fetchSS("/manage/document-set"),
+    fetchAssistantsSS(),
     fetchSS("/chat/get-user-chat-sessions"),
     fetchSS("/query/valid-tags"),
     fetchLLMProvidersSS(),
@@ -72,7 +76,7 @@ export async function fetchChatData(searchParams: {
     | LLMProviderDescriptor[]
     | [Persona[], string | null]
     | null
-  )[] = [null, null, null, null, null, null, null, null, null];
+  )[] = [null, null, null, null, null, null, null, null, null, null];
   try {
     results = await Promise.all(tasks);
   } catch (e) {
@@ -83,13 +87,17 @@ export async function fetchChatData(searchParams: {
   const user = results[1] as User | null;
   const ccPairsResponse = results[2] as Response | null;
   const documentSetsResponse = results[3] as Response | null;
+  const [rawAssistantsList, assistantsFetchError] = results[4] as [
+    Persona[],
+    string | null,
+  ];
 
-  const chatSessionsResponse = results[4] as Response | null;
+  const chatSessionsResponse = results[5] as Response | null;
 
-  const tagsResponse = results[5] as Response | null;
-  const llmProviders = (results[6] || []) as LLMProviderDescriptor[];
-  const foldersResponse = results[7] as Response | null;
-  const userInputPromptsResponse = results[8] as Response | null;
+  const tagsResponse = results[6] as Response | null;
+  const llmProviders = (results[7] || []) as LLMProviderDescriptor[];
+  const foldersResponse = results[8] as Response | null;
+  const userInputPromptsResponse = results[9] as Response | null;
 
   const authDisabled = authTypeMetadata?.authType === "disabled";
   if (!authDisabled && !user) {
@@ -153,6 +161,17 @@ export async function fetchChatData(searchParams: {
     );
   }
 
+  let assistants = rawAssistantsList;
+  if (assistantsFetchError) {
+    console.log(`Failed to fetch assistants - ${assistantsFetchError}`);
+  }
+  // remove those marked as hidden by an admin
+
+  assistants = assistants.filter((assistant) => assistant.is_visible);
+
+  // sort them in priority order
+  assistants.sort(personaComparator);
+
   let tags: Tag[] = [];
   if (tagsResponse?.ok) {
     tags = (await tagsResponse.json()).tags;
@@ -187,6 +206,24 @@ export async function fetchChatData(searchParams: {
 
   // if no connectors are setup, only show personas that are pure
   // passthrough and don't do any retrieval
+  if (!hasAnyConnectors) {
+    assistants = assistants.filter((assistant) => assistant.num_chunks === 0);
+  }
+
+  const hasImageCompatibleModel = llmProviders.some(
+    (provider) =>
+      provider.provider === "openai" ||
+      provider.model_names.some((model) => checkLLMSupportsImageInput(model))
+  );
+
+  if (!hasImageCompatibleModel) {
+    assistants = assistants.filter(
+      (assistant) =>
+        !assistant.tools.some(
+          (tool) => tool.in_code_tool_id === "ImageGenerationTool"
+        )
+    );
+  }
 
   let folders: Folder[] = [];
   if (foldersResponse?.ok) {
@@ -206,6 +243,7 @@ export async function fetchChatData(searchParams: {
     ccPairs,
     availableSources,
     documentSets,
+    assistants,
     tags,
     llmProviders,
     folders,
@@ -215,5 +253,7 @@ export async function fetchChatData(searchParams: {
     toggleSidebar,
     shouldShowWelcomeModal,
     userInputPrompts,
+    hasAnyConnectors,
+    hasImageCompatibleModel,
   };
 }

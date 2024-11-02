@@ -1,10 +1,12 @@
 import { ThreeDotsLoader } from "@/components/Loading";
 import { getDatesList, useDanswerBotAnalytics } from "../lib";
-import { DateRangePickerValue } from "@/app/ee/admin/performance/DateRangeSelector";
-import Text from "@/components/ui/text";
-import Title from "@/components/ui/title";
-import CardSection from "@/components/admin/CardSection";
-import { AreaChartDisplay } from "@/components/ui/areaChart";
+import {
+  AreaChart,
+  Card,
+  Title,
+  Text,
+  DateRangePickerValue,
+} from "@tremor/react";
 
 export function DanswerBotChart({
   timeRange,
@@ -43,8 +45,8 @@ export function DanswerBotChart({
     );
 
     chart = (
-      <AreaChartDisplay
-        className="mt-4"
+      <AreaChart
+        className="mt-4 h-80"
         data={dateRange.map((dateStr) => {
           const danswerBotAnalyticsForDate =
             dateToDanswerBotAnalytics.get(dateStr);
@@ -67,10 +69,10 @@ export function DanswerBotChart({
   }
 
   return (
-    <CardSection className="mt-8">
+    <Card className="mt-8">
       <Title>Slack Bot</Title>
       <Text>Total Queries vs Auto Resolved</Text>
       {chart}
-    </CardSection>
+    </Card>
   );
 }

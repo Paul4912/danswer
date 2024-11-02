@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import CardSection from "@/components/admin/CardSection";
-import { Button } from "@/components/ui/button";
+import { Button, Card } from "@tremor/react";
 import { DocumentIcon2 } from "@/components/icons/icons";
 import useSWR from "swr";
 import { ThreeDotsLoader } from "@/components/Loading";
@@ -54,7 +53,7 @@ function Main() {
   }
   return (
     <div className="container mx-auto p-4">
-      <CardSection className="mb-8 max-w-2xl bg-white text-text shadow-lg rounded-lg">
+      <Card className="mb-8 max-w-2xl bg-white text-text shadow-lg rounded-lg">
         <h3 className="text-2xl text-text-800 font-bold mb-4 text-text border-b border-b-border pb-2">
           Process with Unstructured API
         </h3>
@@ -100,7 +99,12 @@ function Main() {
           <div className="flex space-x-4 mt-6">
             {isApiKeySet ? (
               <>
-                <Button onClick={handleDelete} variant="destructive">
+                <Button
+                  color="red"
+                  onClick={handleDelete}
+                  variant="secondary"
+                  className="bg-red-100 text-red-600 hover:bg-red-400 transition duration-200"
+                >
                   Delete API Key
                 </Button>
                 <p className="text-text-600 my-auto">
@@ -117,7 +121,7 @@ function Main() {
             )}
           </div>
         </div>
-      </CardSection>
+      </Card>
     </div>
   );
 }

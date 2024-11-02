@@ -18,7 +18,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { TableBody } from "@/components/ui/table";
+import { TableBody } from "@tremor/react";
 import { DraggableRow } from "./DraggableRow";
 import { Row } from "./interfaces";
 

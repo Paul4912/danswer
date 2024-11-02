@@ -2,8 +2,7 @@
 
 import { usePopup } from "@/components/admin/connectors/Popup";
 import { StandardAnswerCategory, StandardAnswer } from "@/lib/types";
-import CardSection from "@/components/admin/CardSection";
-import { Button } from "@/components/ui/button";
+import { Button, Card } from "@tremor/react";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
@@ -42,7 +41,7 @@ export const StandardAnswerCreationForm = ({
 
   return (
     <div>
-      <CardSection>
+      <Card>
         {popup}
         <Formik
           initialValues={{
@@ -201,10 +200,9 @@ export const StandardAnswerCreationForm = ({
                   }))}
                 />
               </div>
-              <div className="py-4 flex">
+              <div className="p-4 flex">
                 <Button
                   type="submit"
-                  variant="submit"
                   disabled={isSubmitting}
                   className="mx-auto w-64"
                 >
@@ -214,7 +212,7 @@ export const StandardAnswerCreationForm = ({
             </Form>
           )}
         </Formik>
-      </CardSection>
+      </Card>
     </div>
   );
 };

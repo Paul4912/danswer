@@ -10,8 +10,7 @@ import { GOOGLE_DRIVE_AUTH_IS_ADMIN_COOKIE_NAME } from "@/lib/constants";
 import Cookies from "js-cookie";
 import { TextFormField } from "@/components/admin/connectors/Field";
 import { Form, Formik } from "formik";
-import { User } from "@/lib/types";
-import { Button as TremorButton } from "@/components/ui/button";
+import { Button as TremorButton } from "@tremor/react";
 import {
   Credential,
   GoogleDriveCredentialJson,
@@ -158,7 +157,6 @@ export const DriveJsonUploadSection = ({
   isAdmin,
 }: DriveJsonUploadSectionProps) => {
   const { mutate } = useSWRConfig();
-  const router = useRouter();
 
   if (serviceAccountCredentialData?.service_account_email) {
     return (
@@ -192,7 +190,6 @@ export const DriveJsonUploadSection = ({
                     message: "Successfully deleted service account key",
                     type: "success",
                   });
-                  router.refresh();
                 } else {
                   const errorMsg = await response.text();
                   setPopup({
@@ -310,10 +307,9 @@ interface DriveCredentialSectionProps {
   setPopup: (popupSpec: PopupSpec | null) => void;
   refreshCredentials: () => void;
   connectorExists: boolean;
-  user: User | null;
 }
 
-export const DriveAuthSection = ({
+export const DriveOAuthSection = ({
   googleDrivePublicCredential,
   googleDriveServiceAccountCredential,
   serviceAccountKeyData,
@@ -321,7 +317,6 @@ export const DriveAuthSection = ({
   setPopup,
   refreshCredentials,
   connectorExists,
-  user,
 }: DriveCredentialSectionProps) => {
   const router = useRouter();
 
@@ -361,23 +356,23 @@ export const DriveAuthSection = ({
     return (
       <div>
         <p className="text-sm mb-6">
-          When using a Google Drive Service Account, you must specify the email
-          of the primary admin that you would like the service account to
-          impersonate.
+          When using a Google Drive Service Account, you can either have Danswer
+          act as the service account itself OR you can specify an account for
+          the service account to impersonate.
           <br />
           <br />
-          Ideally, this account should be an owner/admin of the Google
-          Organization that owns the Google Drive(s) you want to index.
+          If you want to use the service account itself, leave the{" "}
+          <b>&apos;User email to impersonate&apos;</b> field blank when
+          submitting. If you do choose this option, make sure you have shared
+          the documents you want to index with the service account.
         </p>
 
         <Formik
           initialValues={{
-            google_drive_primary_admin: user?.email || "",
+            google_drive_delegated_user: "",
           }}
           validationSchema={Yup.object().shape({
-            google_drive_primary_admin: Yup.string().required(
-              "User email is required"
-            ),
+            google_drive_delegated_user: Yup.string().optional(),
           })}
           onSubmit={async (values, formikHelpers) => {
             formikHelpers.setSubmitting(true);
@@ -389,7 +384,8 @@ export const DriveAuthSection = ({
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  google_drive_primary_admin: values.google_drive_primary_admin,
+                  google_drive_delegated_user:
+                    values.google_drive_delegated_user,
                 }),
               }
             );
@@ -412,9 +408,9 @@ export const DriveAuthSection = ({
           {({ isSubmitting }) => (
             <Form>
               <TextFormField
-                name="google_drive_primary_admin"
-                label="User email to impersonate:"
-                subtext="Enter the email of the user whose Google Drive access you want to delegate to the service account."
+                name="google_drive_delegated_user"
+                label="[Optional] User email to impersonate:"
+                subtext="If left blank, Danswer will use the service account itself."
               />
               <div className="flex">
                 <TremorButton type="submit" disabled={isSubmitting}>

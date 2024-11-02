@@ -11,20 +11,20 @@ import { deleteSlackBotConfig, isPersonaASlackBotPersona } from "./lib";
 import { SlackBotTokensForm } from "./SlackBotTokensForm";
 import { AdminPageTitle } from "@/components/admin/Title";
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableHeader,
+  TableHeaderCell,
   TableRow,
-} from "@/components/ui/table";
-import Text from "@/components/ui/text";
-import Title from "@/components/ui/title";
+  Text,
+  Title,
+} from "@tremor/react";
 import { FiArrowUpRight, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Link from "next/link";
 import { InstantSSRAutoRefresh } from "@/components/SSRAutoRefresh";
 import { ErrorCallout } from "@/components/ErrorCallout";
-import { Button } from "@/components/ui/button";
 
 const numToDisplay = 50;
 
@@ -53,14 +53,14 @@ const SlackBotConfigsTable = ({
   return (
     <div>
       <Table>
-        <TableHeader>
+        <TableHead>
           <TableRow>
-            <TableHead>Channels</TableHead>
-            <TableHead>Assistant</TableHead>
-            <TableHead>Document Sets</TableHead>
-            <TableHead>Delete</TableHead>
+            <TableHeaderCell>Channels</TableHeaderCell>
+            <TableHeaderCell>Assistant</TableHeaderCell>
+            <TableHeaderCell>Document Sets</TableHeaderCell>
+            <TableHeaderCell>Delete</TableHeaderCell>
           </TableRow>
-        </TableHeader>
+        </TableHead>
         <TableBody>
           {slackBotConfigs
             .slice(numToDisplay * (page - 1), numToDisplay * page)
@@ -235,7 +235,8 @@ const Main = () => {
             onClick={() => {
               setSlackBotTokensModalIsOpen(!slackBotTokensModalIsOpen);
             }}
-            variant="outline"
+            color="blue"
+            size="xs"
             className="mt-2"
             icon={slackBotTokensModalIsOpen ? FiChevronUp : FiChevronDown}
           >
@@ -267,7 +268,7 @@ const Main = () => {
           <div className="mb-2"></div>
 
           <Link className="flex mb-3 w-fit" href="/admin/bot/new">
-            <Button className="my-auto" variant="next">
+            <Button className="my-auto" color="green" size="xs">
               New Slack Bot Configuration
             </Button>
           </Link>

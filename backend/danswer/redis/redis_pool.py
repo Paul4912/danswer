@@ -102,9 +102,6 @@ class TenantRedis(redis.Redis):
             "reacquire",
             "create_lock",
             "startswith",
-            "sadd",
-            "srem",
-            "scard",
         ]  # Regular methods that need simple prefixing
 
         if item == "scan_iter":

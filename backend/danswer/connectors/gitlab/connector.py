@@ -24,9 +24,6 @@ from danswer.connectors.models import Document
 from danswer.connectors.models import Section
 from danswer.utils.logger import setup_logger
 
-
-logger = setup_logger()
-
 # List of directories/Files to exclude
 exclude_patterns = [
     "logs",
@@ -34,6 +31,7 @@ exclude_patterns = [
     ".gitlab/",
     ".pre-commit-config.yaml",
 ]
+logger = setup_logger()
 
 
 def _batch_gitlab_objects(

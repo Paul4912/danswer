@@ -57,7 +57,6 @@ class UserInfo(BaseModel):
     oidc_expiry: datetime | None = None
     current_token_created_at: datetime | None = None
     current_token_expiry_length: int | None = None
-    organization_name: str | None = None
 
     @classmethod
     def from_model(
@@ -65,7 +64,6 @@ class UserInfo(BaseModel):
         user: User,
         current_token_created_at: datetime | None = None,
         expiry_length: int | None = None,
-        organization_name: str | None = None,
     ) -> "UserInfo":
         return cls(
             id=str(user.id),
@@ -82,7 +80,6 @@ class UserInfo(BaseModel):
                     visible_assistants=user.visible_assistants,
                 )
             ),
-            organization_name=organization_name,
             # set to None if TRACK_EXTERNAL_IDP_EXPIRY is False so that we avoid cases
             # where they previously had this set + used OIDC, and now they switched to
             # basic auth are now constantly getting redirected back to the login page

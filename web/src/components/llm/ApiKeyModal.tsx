@@ -26,17 +26,18 @@ export const ApiKeyModal = ({
   }
   return (
     <Modal
-      title="Configure a Generative AI Model"
+      title="Set an API Key!"
       width="max-w-3xl w-full"
       onOutsideClick={() => hide()}
     >
       <>
         <div className="mb-5 text-sm text-gray-700">
-          Please provide an API Key – you can always change this or switch
-          models later.
+          Please provide an API Key below in order to start using Danswer – you
+          can always change this later.
           <br />
-          If you would rather look around first, you can{" "}
+          If you&apos;d rather look around first, you can
           <strong onClick={() => hide()} className="text-link cursor-pointer">
+            {" "}
             skip this step
           </strong>
           .

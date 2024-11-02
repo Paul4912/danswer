@@ -8,7 +8,6 @@ import {
   HostedEmbeddingModel,
 } from "./interfaces";
 import { FiExternalLink } from "react-icons/fi";
-import CardSection from "../admin/CardSection";
 
 export function ModelPreview({
   model,
@@ -20,10 +19,8 @@ export function ModelPreview({
   const currentModelCopy = getCurrentModelCopy(model.model_name);
 
   return (
-    <CardSection
-      className={`shadow-md ${
-        display ? "bg-inverted rounded-lg p-4" : "bg-hover-light p-2"
-      } w-96 flex flex-col`}
+    <div
+      className={`border border-border rounded shadow-md ${display ? "bg-inverted rounded-lg p-4" : "bg-hover-light p-2"} w-96 flex flex-col`}
     >
       <div className="font-bold text-lg flex">{model.model_name}</div>
       <div className="text-sm mt-1 mx-1">
@@ -31,7 +28,7 @@ export function ModelPreview({
           currentModelCopy?.description ||
           "Custom model—no description is available."}
       </div>
-    </CardSection>
+    </div>
   );
 }
 

@@ -1,7 +1,5 @@
-import { Modal } from "@/components/Modal";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import Text from "@/components/ui/text";
+import { ModalWrapper } from "@/components/modals/ModalWrapper";
+import { Button, Divider, Text } from "@tremor/react";
 
 export function MakePublicAssistantModal({
   isPublic,
@@ -13,7 +11,7 @@ export function MakePublicAssistantModal({
   onClose: () => void;
 }) {
   return (
-    <Modal onOutsideClick={onClose} width="max-w-3xl">
+    <ModalWrapper onClose={onClose} modalClassName="max-w-3xl">
       <div className="space-y-6">
         <h2 className="text-2xl font-bold text-emphasis">
           {isPublic ? "Public Assistant" : "Make Assistant Public"}
@@ -30,7 +28,7 @@ export function MakePublicAssistantModal({
             : " Only you can access this assistant."}
         </Text>
 
-        <Separator />
+        <Divider />
 
         {isPublic ? (
           <div className="space-y-4">
@@ -44,7 +42,7 @@ export function MakePublicAssistantModal({
                 onClose();
               }}
               size="sm"
-              variant="destructive"
+              color="red"
             >
               Make Assistant Private
             </Button>
@@ -62,13 +60,13 @@ export function MakePublicAssistantModal({
                 onClose();
               }}
               size="sm"
-              variant="submit"
+              color="green"
             >
               Make Assistant Public
             </Button>
           </div>
         )}
       </div>
-    </Modal>
+    </ModalWrapper>
   );
 }

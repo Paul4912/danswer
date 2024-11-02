@@ -12,12 +12,10 @@ import {
   SubLabel,
   TextFormField,
 } from "@/components/admin/connectors/Field";
-import { Button } from "@/components/ui/button";
-import Text from "@/components/ui/text";
+import { Button, Divider, Text } from "@tremor/react";
 import { ImageUpload } from "./ImageUpload";
 import { AdvancedOptionsToggle } from "@/components/AdvancedOptionsToggle";
 import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
 
 export function WhitelabelingForm() {
   const router = useRouter();
@@ -153,8 +151,8 @@ export function WhitelabelingForm() {
                 />
 
                 <Button
-                  variant="destructive"
-                  size="sm"
+                  color="red"
+                  size="xs"
                   type="button"
                   className="mb-8"
                   onClick={async () => {
@@ -185,7 +183,7 @@ export function WhitelabelingForm() {
               setSelectedFile={setSelectedLogo}
             />
 
-            <Separator />
+            <Divider />
 
             <AdvancedOptionsToggle
               showAdvancedOptions={showAdvancedOptions}
@@ -219,7 +217,7 @@ export function WhitelabelingForm() {
                   subtext="If enabled, the chat header will be displayed on two lines instead of one."
                 />
 
-                <Separator />
+                <Divider />
 
                 <TextFormField
                   label={
@@ -231,9 +229,7 @@ export function WhitelabelingForm() {
                   subtext={
                     values.enable_consent_screen
                       ? `The title for the consent screen that will be displayed for each user on their initial visit to the application. If left blank, title will default to "Terms of Use".`
-                      : `The title for the popup that will be displayed for each user on their initial visit to the application. If left blank AND Custom Popup Content is specified, will use "Welcome to ${
-                          values.application_name || "Danswer"
-                        }!".`
+                      : `The title for the popup that will be displayed for each user on their initial visit to the application. If left blank AND Custom Popup Content is specified, will use "Welcome to ${values.application_name || "Danswer"}!".`
                   }
                   placeholder={
                     values.enable_consent_screen
@@ -296,8 +292,8 @@ export function WhitelabelingForm() {
                       />
 
                       <Button
-                        variant="destructive"
-                        size="sm"
+                        color="red"
+                        size="xs"
                         type="button"
                         className="mb-8"
                         onClick={async () => {

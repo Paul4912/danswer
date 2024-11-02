@@ -5,7 +5,7 @@ import MultiSelectDropdown from "../MultiSelectDropdown";
 import { StandardAnswerCategory } from "@/lib/types";
 import { ErrorCallout } from "../ErrorCallout";
 import { LoadingAnimation } from "../Loading";
-import { Separator } from "@/components/ui/separator";
+import { Divider } from "@tremor/react";
 
 interface StandardAnswerCategoryDropdownFieldProps {
   standardAnswerCategoryResponse: StandardAnswerCategoryResponse;
@@ -65,7 +65,7 @@ export const StandardAnswerCategoryDropdownField: FC<
         </div>
       </div>
 
-      <Separator />
+      <Divider />
     </>
   );
 };

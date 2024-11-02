@@ -6,8 +6,7 @@ import { useState } from "react";
 import { FiPlusSquare } from "react-icons/fi";
 import { Modal } from "@/components/Modal";
 
-import { Button } from "@/components/ui/button";
-import Text from "@/components/ui/text";
+import { Button, Text } from "@tremor/react";
 import { LoadingAnimation } from "@/components/Loading";
 import { AdminPageTitle } from "@/components/admin/Title";
 import { usePopup, PopupSpec } from "@/components/admin/connectors/Popup";

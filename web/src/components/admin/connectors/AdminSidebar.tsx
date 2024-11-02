@@ -55,17 +55,17 @@ export function AdminSidebar({ collections }: { collections: Collection[] }) {
                 <div className="flex-grow min-w-0 my-auto">
                   {enterpriseSettings && enterpriseSettings.application_name ? (
                     <div className="w-full">
-                      <HeaderTitle backgroundToggled={true}>
+                      <HeaderTitle>
                         {enterpriseSettings.application_name}
                       </HeaderTitle>
                       {!NEXT_PUBLIC_DO_NOT_USE_TOGGLE_OFF_DANSWER_POWERED && (
                         <p className="text-xs text-subtle">
-                          Powered by Buddy
+                          Powered by Danswer
                         </p>
                       )}
                     </div>
                   ) : (
-                    <HeaderTitle backgroundToggled={true}>Danswer</HeaderTitle>
+                    <HeaderTitle>Danswer</HeaderTitle>
                   )}
                 </div>
               </div>
@@ -74,7 +74,7 @@ export function AdminSidebar({ collections }: { collections: Collection[] }) {
         </div>
         <div className="flex w-full justify-center">
           <Link href={"/chat"}>
-            <button className="text-sm flex items-center block w-52 py-2.5 flex px-2 text-left text-text-back-button bg-background-back-button hover:bg-opacity-80 cursor-pointer rounded">
+            <button className="text-sm flex items-center block w-52 py-2.5 flex px-2 text-left bg-background-200 hover:bg-background-200/80 cursor-pointer rounded">
               <BackIcon className="my-auto" size={18} />
               <p className="ml-1 break-words line-clamp-2 ellipsis leading-none">
                 Back to{" "}
@@ -124,7 +124,7 @@ export function AdminSidebar({ collections }: { collections: Collection[] }) {
           key={"danswerVersion"}
         >
           <h2 className="text-xs text-text w-52 font-medium pb-2">
-            Buddy version: {combinedSettings.webVersion}
+            Danswer version: {combinedSettings.webVersion}
           </h2>
         </div>
       )}

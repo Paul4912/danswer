@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button, Card } from "@tremor/react";
 import { ValidSources } from "@/lib/types";
 import { FaAccusoft } from "react-icons/fa";
 import { submitCredential } from "@/components/admin/connectors/CredentialForm";
@@ -28,7 +27,6 @@ import {
   IsPublicGroupSelector,
 } from "@/components/IsPublicGroupSelector";
 import { useUser } from "@/components/user/UserProvider";
-import CardSection from "@/components/admin/CardSection";
 
 const CreateButton = ({
   onClick,
@@ -203,7 +201,7 @@ export default function CreateCredential({
               for information on setting up this connector.
             </p>
           )}
-          <CardSection className="!border-0 mt-4 flex flex-col gap-y-6">
+          <Card className="!border-0 mt-4 flex flex-col gap-y-6">
             <TextFormField
               name="name"
               placeholder="(Optional) credential name.."
@@ -256,7 +254,7 @@ export default function CreateCredential({
                 </div>
               </div>
             )}
-          </CardSection>
+          </Card>
           {swapConnector && (
             <div className="flex gap-x-4 w-full mt-8 justify-end">
               <Button

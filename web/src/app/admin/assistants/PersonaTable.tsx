@@ -1,11 +1,11 @@
 "use client";
 
-import Text from "@/components/ui/text";
+import { Text } from "@tremor/react";
 import { Persona } from "./interfaces";
 import { useRouter } from "next/navigation";
 import { CustomCheckbox } from "@/components/CustomCheckbox";
 import { usePopup } from "@/components/admin/connectors/Popup";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { DraggableTable } from "@/components/table/DraggableTable";
 import {
@@ -16,7 +16,6 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import { TrashIcon } from "@/components/icons/icons";
 import { useUser } from "@/components/user/UserProvider";
-import { useAssistants } from "@/components/context/AssistantsContext";
 
 function PersonaTypeDisplay({ persona }: { persona: Persona }) {
   if (persona.builtin_persona) {
@@ -38,36 +37,43 @@ function PersonaTypeDisplay({ persona }: { persona: Persona }) {
   return <Text>Personal {persona.owner && <>({persona.owner.email})</>}</Text>;
 }
 
-export function PersonasTable() {
+export function PersonasTable({
+  allPersonas,
+  editablePersonas,
+}: {
+  allPersonas: Persona[];
+  editablePersonas: Persona[];
+}) {
   const router = useRouter();
   const { popup, setPopup } = usePopup();
-  const { refreshUser, isLoadingUser, isAdmin } = useUser();
-  const {
-    allAssistants: assistants,
-    refreshAssistants,
-    editablePersonas,
-  } = useAssistants();
+
+  const { isLoadingUser, isAdmin } = useUser();
 
   const editablePersonaIds = useMemo(() => {
     return new Set(editablePersonas.map((p) => p.id.toString()));
   }, [editablePersonas]);
 
-  const [finalPersonas, setFinalPersonas] = useState<Persona[]>([]);
-
-  useEffect(() => {
+  const sortedPersonas = useMemo(() => {
     const editable = editablePersonas.sort(personaComparator);
-    const nonEditable = assistants
+    const nonEditable = allPersonas
       .filter((p) => !editablePersonaIds.has(p.id.toString()))
       .sort(personaComparator);
-    setFinalPersonas([...editable, ...nonEditable]);
-  }, [editablePersonas, assistants, editablePersonaIds]);
+    return [...editable, ...nonEditable];
+  }, [allPersonas, editablePersonas]);
+
+  const [finalPersonas, setFinalPersonas] = useState<string[]>(
+    sortedPersonas.map((persona) => persona.id.toString())
+  );
+  const finalPersonaValues = finalPersonas
+    .filter((id) => new Set(allPersonas.map((p) => p.id.toString())).has(id))
+    .map((id) => {
+      return sortedPersonas.find(
+        (persona) => persona.id.toString() === id
+      ) as Persona;
+    });
 
   const updatePersonaOrder = async (orderedPersonaIds: UniqueIdentifier[]) => {
-    const reorderedAssistants = orderedPersonaIds.map(
-      (id) => assistants.find((assistant) => assistant.id.toString() === id)!
-    );
-
-    setFinalPersonas(reorderedAssistants);
+    setFinalPersonas(orderedPersonaIds.map((id) => id.toString()));
 
     const displayPriorityMap = new Map<UniqueIdentifier, number>();
     orderedPersonaIds.forEach((personaId, ind) => {
@@ -83,19 +89,13 @@ export function PersonasTable() {
         display_priority_map: Object.fromEntries(displayPriorityMap),
       }),
     });
-
     if (!response.ok) {
       setPopup({
         type: "error",
         message: `Failed to update persona order - ${await response.text()}`,
       });
-      setFinalPersonas(assistants);
       router.refresh();
-      return;
     }
-
-    await refreshAssistants();
-    await refreshUser();
   };
 
   if (isLoadingUser) {
@@ -115,8 +115,8 @@ export function PersonasTable() {
       <DraggableTable
         headers={["Name", "Description", "Type", "Is Visible", "Delete"]}
         isAdmin={isAdmin}
-        rows={finalPersonas.map((persona) => {
-          const isEditable = editablePersonas.includes(persona);
+        rows={finalPersonaValues.map((persona) => {
+          const isEditable = editablePersonaIds.has(persona.id.toString());
           return {
             id: persona.id.toString(),
             cells: [
@@ -160,9 +160,7 @@ export function PersonasTable() {
                     }
                   }
                 }}
-                className={`px-1 py-0.5 rounded flex ${
-                  isEditable ? "hover:bg-hover cursor-pointer" : ""
-                } select-none w-fit`}
+                className={`px-1 py-0.5 rounded flex ${isEditable ? "hover:bg-hover cursor-pointer" : ""} select-none w-fit`}
               >
                 <div className="my-auto w-12">
                   {!persona.is_visible ? (

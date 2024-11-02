@@ -5,12 +5,12 @@ import {
   Table,
   TableHead,
   TableRow,
+  TableHeaderCell,
   TableBody,
   TableCell,
-  TableHeader,
-} from "@/components/ui/table";
-import Text from "@/components/ui/text";
-import { Callout } from "@/components/ui/callout";
+  Text,
+  Callout,
+} from "@tremor/react";
 import { CCPairFullInfo, PaginatedIndexAttempts } from "./types";
 import { IndexAttemptStatus } from "@/components/Status";
 import { PageSelector } from "@/components/PageSelector";
@@ -206,8 +206,8 @@ export function IndexingAttemptsTable({ ccPair }: { ccPair: CCPairFullInfo }) {
       <Callout
         className="mt-4"
         title="No indexing attempts scheduled yet"
-        icon={"info"}
-        type="notice"
+        icon={FiInfo}
+        color="blue"
       >
         Index attempts are scheduled in the background, and may take some time
         to appear. Try refreshing the page in ~30 seconds!
@@ -231,12 +231,12 @@ export function IndexingAttemptsTable({ ccPair }: { ccPair: CCPairFullInfo }) {
         )}
 
       <Table>
-        <TableHeader>
+        <TableHead>
           <TableRow>
-            <TableHead>Time Started</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>New Doc Cnt</TableHead>
-            <TableHead>
+            <TableHeaderCell>Time Started</TableHeaderCell>
+            <TableHeaderCell>Status</TableHeaderCell>
+            <TableHeaderCell>New Doc Cnt</TableHeaderCell>
+            <TableHeaderCell>
               <div className="w-fit">
                 <Tooltip
                   width="max-w-sm"
@@ -248,10 +248,10 @@ export function IndexingAttemptsTable({ ccPair }: { ccPair: CCPairFullInfo }) {
                   </span>
                 </Tooltip>
               </div>
-            </TableHead>
-            <TableHead>Error Message</TableHead>
+            </TableHeaderCell>
+            <TableHeaderCell>Error Message</TableHeaderCell>
           </TableRow>
-        </TableHeader>
+        </TableHead>
         <TableBody>
           {currentPageData.index_attempts.map((indexAttempt) => {
             const docsPerMinute =
@@ -266,6 +266,7 @@ export function IndexingAttemptsTable({ ccPair }: { ccPair: CCPairFullInfo }) {
                 <TableCell>
                   <IndexAttemptStatus
                     status={indexAttempt.status || "not_started"}
+                    size="xs"
                   />
                   {docsPerMinute ? (
                     <div className="text-xs mt-1">

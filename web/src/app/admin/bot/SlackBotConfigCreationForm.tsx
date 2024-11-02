@@ -16,9 +16,7 @@ import {
   isPersonaASlackBotPersona,
   updateSlackBotConfig,
 } from "./lib";
-import { Separator } from "@/components/ui/separator";
-import CardSection from "@/components/admin/CardSection";
-import { Button } from "@/components/ui/button";
+import { Button, Card, Divider } from "@tremor/react";
 import { useRouter } from "next/navigation";
 import { Persona } from "../assistants/interfaces";
 import { useState } from "react";
@@ -54,7 +52,7 @@ export const SlackBotCreationForm = ({
 
   return (
     <div>
-      <CardSection>
+      <Card>
         {popup}
         <Formik
           initialValues={{
@@ -261,7 +259,7 @@ export const SlackBotCreationForm = ({
                   </div>
                 </div>
 
-                <Separator />
+                <Divider />
 
                 <AdvancedOptionsToggle
                   showAdvancedOptions={showAdvancedOptions}
@@ -380,7 +378,7 @@ export const SlackBotCreationForm = ({
             </Form>
           )}
         </Formik>
-      </CardSection>
+      </Card>
     </div>
   );
 };

@@ -1,22 +1,18 @@
 import { useQueryHistory } from "../lib";
-import { Separator } from "@/components/ui/separator";
+
 import {
+  Card,
   Table,
   TableHead,
   TableRow,
+  TableHeaderCell,
   TableBody,
   TableCell,
-  TableHeader,
-} from "@/components/ui/table";
-import Text from "@/components/ui/text";
-
-import {
+  Text,
+  Divider,
   Select,
   SelectItem,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-} from "@/components/ui/select";
+} from "@tremor/react";
 import { ThreeDotsLoader } from "@/components/Loading";
 import { ChatSessionMinimal } from "../usage/types";
 import { timestampToReadableDate } from "@/lib/dateUtils";
@@ -28,7 +24,6 @@ import { PageSelector } from "@/components/PageSelector";
 import Link from "next/link";
 import { FeedbackBadge } from "./FeedbackBadge";
 import { DownloadAsCSV } from "./DownloadAsCSV";
-import CardSection from "@/components/admin/CardSection";
 
 const NUM_IN_PAGE = 20;
 
@@ -85,30 +80,17 @@ function SelectFeedbackType({
         <Select
           value={value}
           onValueChange={onValueChange as (value: string) => void}
+          enableClear={false}
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Select feedback type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">
-              <div className="flex items-center gap-2">
-                <FiMinus className="h-4 w-4" />
-                <span>Any</span>
-              </div>
-            </SelectItem>
-            <SelectItem value="like">
-              <div className="flex items-center gap-2">
-                <FiSmile className="h-4 w-4" />
-                <span>Like</span>
-              </div>
-            </SelectItem>
-            <SelectItem value="dislike">
-              <div className="flex items-center gap-2">
-                <FiFrown className="h-4 w-4" />
-                <span>Dislike</span>
-              </div>
-            </SelectItem>
-          </SelectContent>
+          <SelectItem value="all" icon={FiMinus}>
+            Any
+          </SelectItem>
+          <SelectItem value="like" icon={FiSmile}>
+            Like
+          </SelectItem>
+          <SelectItem value="dislike" icon={FiFrown}>
+            Dislike
+          </SelectItem>
         </Select>
       </div>
     </div>
@@ -127,7 +109,7 @@ export function QueryHistoryTable() {
   const [page, setPage] = useState(1);
 
   return (
-    <CardSection className="mt-8">
+    <Card className="mt-8">
       {chatSessionData ? (
         <>
           <div className="flex">
@@ -139,31 +121,24 @@ export function QueryHistoryTable() {
 
               <DateRangeSelector
                 value={timeRange}
-                onValueChange={(value) => {
-                  if (value) {
-                    setTimeRange({
-                      ...value,
-                      selectValue: timeRange.selectValue,
-                    });
-                  }
-                }}
+                onValueChange={setTimeRange}
               />
             </div>
 
             <DownloadAsCSV />
           </div>
-          <Separator />
+          <Divider />
           <Table className="mt-5">
-            <TableHeader>
+            <TableHead>
               <TableRow>
-                <TableHead>First User Message</TableHead>
-                <TableHead>First AI Response</TableHead>
-                <TableHead>Feedback</TableHead>
-                <TableHead>User</TableHead>
-                <TableHead>Persona</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHeaderCell>First User Message</TableHeaderCell>
+                <TableHeaderCell>First AI Response</TableHeaderCell>
+                <TableHeaderCell>Feedback</TableHeaderCell>
+                <TableHeaderCell>User</TableHeaderCell>
+                <TableHeaderCell>Persona</TableHeaderCell>
+                <TableHeaderCell>Date</TableHeaderCell>
               </TableRow>
-            </TableHeader>
+            </TableHead>
             <TableBody>
               {chatSessionData
                 .slice(NUM_IN_PAGE * (page - 1), NUM_IN_PAGE * page)
@@ -198,6 +173,6 @@ export function QueryHistoryTable() {
           <ThreeDotsLoader />
         </div>
       )}
-    </CardSection>
+    </Card>
   );
 }

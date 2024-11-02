@@ -4,8 +4,7 @@ import { HealthCheckBanner } from "@/components/health/healthcheck";
 
 import { EmbeddingModelSelection } from "../EmbeddingModelSelectionForm";
 import { useEffect, useMemo, useState } from "react";
-import Text from "@/components/ui/text";
-import { Button } from "@/components/ui/button";
+import { Button, Card, Text } from "@tremor/react";
 import { ArrowLeft, ArrowRight, WarningCircle } from "@phosphor-icons/react";
 import {
   CloudEmbeddingModel,
@@ -27,8 +26,6 @@ import { useEmbeddingFormContext } from "@/components/context/EmbeddingContext";
 import { Modal } from "@/components/Modal";
 
 import { useRouter } from "next/navigation";
-import CardSection from "@/components/admin/CardSection";
-import { CardDescription } from "@/components/ui/card";
 export default function EmbeddingForm() {
   const { formStep, nextFormStep, prevFormStep } = useEmbeddingFormContext();
   const { popup, setPopup } = usePopup();
@@ -36,6 +33,11 @@ export default function EmbeddingForm() {
 
   const [advancedEmbeddingDetails, setAdvancedEmbeddingDetails] =
     useState<AdvancedSearchConfiguration>({
+      model_name: "",
+      model_dim: 0,
+      normalize: false,
+      query_prefix: "",
+      passage_prefix: "",
       index_name: "",
       multipass_indexing: true,
       multilingual_expansion: [],
@@ -107,6 +109,11 @@ export default function EmbeddingForm() {
   useEffect(() => {
     if (searchSettings) {
       setAdvancedEmbeddingDetails({
+        model_name: searchSettings.model_name,
+        model_dim: searchSettings.model_dim,
+        normalize: searchSettings.normalize,
+        query_prefix: searchSettings.query_prefix,
+        passage_prefix: searchSettings.passage_prefix,
         index_name: searchSettings.index_name,
         multipass_indexing: searchSettings.multipass_indexing,
         multilingual_expansion: searchSettings.multilingual_expansion,
@@ -256,8 +263,8 @@ export default function EmbeddingForm() {
       // This is a cloud model
       newModel = {
         ...selectedProvider,
-        ...advancedEmbeddingDetails,
         ...rerankingDetails,
+        ...advancedEmbeddingDetails,
         provider_type:
           (selectedProvider.provider_type
             ?.toLowerCase()
@@ -267,8 +274,8 @@ export default function EmbeddingForm() {
       // This is a locally hosted model
       newModel = {
         ...selectedProvider,
-        ...advancedEmbeddingDetails,
         ...rerankingDetails,
+        ...advancedEmbeddingDetails,
         provider_type: null,
       };
     }
@@ -316,7 +323,7 @@ export default function EmbeddingForm() {
               take hours or days. You can monitor the progress of the
               re-indexing on this page while the models are being switched.
             </Text>
-            <CardSection>
+            <Card>
               <EmbeddingModelSelection
                 updateCurrentModel={updateCurrentModel}
                 setModelTab={setModelTab}
@@ -326,7 +333,7 @@ export default function EmbeddingForm() {
                 updateSelectedProvider={updateSelectedProvider}
                 advancedEmbeddingDetails={advancedEmbeddingDetails}
               />
-            </CardSection>
+            </Card>
             <div className="mt-4 flex w-full justify-end">
               <button
                 className="enabled:cursor-pointer disabled:cursor-not-allowed disabled:bg-blue-200 bg-blue-400 flex gap-x-1 items-center text-white py-2.5 px-3.5 text-sm font-regular rounded-sm"
@@ -363,10 +370,7 @@ export default function EmbeddingForm() {
                 <li>Nomic nomic-embed-text-v1 for self-hosted</li>
               </div>
               <div className="flex mt-4 justify-between">
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowPoorModel(false)}
-                >
+                <Button color="green" onClick={() => setShowPoorModel(false)}>
                   Cancel update
                 </Button>
                 <Button
@@ -384,17 +388,7 @@ export default function EmbeddingForm() {
 
         {formStep == 1 && (
           <>
-            <h2 className="text-2xl font-bold mb-4 text-text-800">
-              Select a Reranking Model
-            </h2>
-            <Text className="mb-4">
-              Updating the reranking model does not require re-indexing
-              documents. The reranker helps improve search quality by reordering
-              results after the initial embedding search. Changes will take
-              effect immediately for all new searches.
-            </Text>
-
-            <CardSection>
+            <Card>
               <RerankingDetailsForm
                 setModelTab={setModelTab}
                 modelTab={
@@ -406,7 +400,7 @@ export default function EmbeddingForm() {
                 originalRerankingDetails={originalRerankingDetails}
                 setRerankingDetails={setRerankingDetails}
               />
-            </CardSection>
+            </Card>
 
             <div className={`mt-4 w-full grid grid-cols-3`}>
               <button
@@ -435,20 +429,12 @@ export default function EmbeddingForm() {
         )}
         {formStep == 2 && (
           <>
-            <h2 className="text-2xl font-bold mb-4 text-text-800">
-              Advanced Search Configuration
-            </h2>
-            <Text className="mb-4">
-              Configure advanced embedding and search settings. Changes will
-              require re-indexing documents.
-            </Text>
-
-            <CardSection>
+            <Card>
               <AdvancedEmbeddingFormPage
                 advancedEmbeddingDetails={advancedEmbeddingDetails}
                 updateAdvancedEmbeddingDetails={updateAdvancedEmbeddingDetails}
               />
-            </CardSection>
+            </Card>
 
             <div className={`mt-4 grid  grid-cols-3 w-full `}>
               <button

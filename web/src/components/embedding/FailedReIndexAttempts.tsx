@@ -2,20 +2,23 @@ import { buildCCPairInfoUrl } from "@/app/admin/connector/[ccPairId]/lib";
 import { PageSelector } from "@/components/PageSelector";
 import { IndexAttemptStatus } from "@/components/Status";
 import { deleteCCPair } from "@/lib/documentDeletion";
-import { FailedConnectorIndexingStatus } from "@/lib/types";
-import { Button } from "@/components/ui/button";
 import {
+  ConnectorIndexingStatus,
+  FailedConnectorIndexingStatus,
+} from "@/lib/types";
+import {
+  Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableHeader,
+  TableHeaderCell,
   TableRow,
-} from "@/components/ui/table";
-import Text from "@/components/ui/text";
+  Text,
+} from "@tremor/react";
 import Link from "next/link";
 import { useState } from "react";
-import { FiLink, FiMaximize2, FiTrash } from "react-icons/fi";
+import { FiLink, FiMaximize2, FiTrash, FiTrash2 } from "react-icons/fi";
 import { mutate } from "swr";
 import { PopupSpec } from "../admin/connectors/Popup";
 
@@ -47,19 +50,27 @@ export function FailedReIndexAttempts({
 
       <div>
         <Table>
-          <TableHeader>
+          <TableHead>
             <TableRow>
-              <TableHead className="w-1/8 sm:w-1/6">Connector Name</TableHead>
-              <TableHead className="w-1/8 sm:w-1/6">Status</TableHead>
-              <TableHead className="w-4/8 sm:w-2/6">Error Message</TableHead>
-              <TableHead className="w-1/8 sm:w-1/6">Visit Connector</TableHead>
+              <TableHeaderCell className="w-1/8 sm:w-1/6">
+                Connector Name
+              </TableHeaderCell>
+              <TableHeaderCell className="w-1/8 sm:w-1/6">
+                Status
+              </TableHeaderCell>
+              <TableHeaderCell className="w-4/8 sm:w-2/6">
+                Error Message
+              </TableHeaderCell>
+              <TableHeaderCell className="w-1/8 sm:w-1/6">
+                Visit Connector
+              </TableHeaderCell>
               {anyDeletable && (
-                <TableHead className="w-1/8 sm:w-2/6">
+                <TableHeaderCell className="w-1/8 sm:w-2/6">
                   Delete Connector
-                </TableHead>
+                </TableHeaderCell>
               )}
             </TableRow>
-          </TableHeader>
+          </TableHead>
           <TableBody>
             {failedIndexingStatuses
               .slice(numToDisplay * (page - 1), numToDisplay * page)
@@ -97,8 +108,8 @@ export function FailedReIndexAttempts({
                     </TableCell>
                     <TableCell>
                       <Button
-                        size="sm"
-                        variant="destructive"
+                        size="xs"
+                        color="red"
                         onClick={() =>
                           deleteCCPair(
                             reindexingProgress.connector_id,

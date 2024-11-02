@@ -6,9 +6,10 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableHeader,
+  TableHeaderCell,
   TableRow,
-} from "@/components/ui/table";
+  Text,
+} from "@tremor/react";
 import Link from "next/link";
 import { useState } from "react";
 import { FiMaximize2 } from "react-icons/fi";
@@ -24,13 +25,17 @@ export function ReindexingProgressTable({
   return (
     <div>
       <Table>
-        <TableHeader>
+        <TableHead>
           <TableRow>
-            <TableHead className="w-1/7 sm:w-1/5">Connector Name</TableHead>
-            <TableHead className="w-3/7 sm:w-1/5">Status</TableHead>
-            <TableHead className="w-3/7 sm:w-1/5">Docs Re-Indexed</TableHead>
+            <TableHeaderCell className="w-1/7 sm:w-1/5">
+              Connector Name
+            </TableHeaderCell>
+            <TableHeaderCell className="w-3/7 sm:w-1/5">Status</TableHeaderCell>
+            <TableHeaderCell className="w-3/7 sm:w-1/5">
+              Docs Re-Indexed
+            </TableHeaderCell>
           </TableRow>
-        </TableHeader>
+        </TableHead>
         <TableBody>
           {reindexingProgress
             .slice(numToDisplay * (page - 1), numToDisplay * page)

@@ -1,8 +1,5 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
-import Text from "@/components/ui/text";
-import Title from "@/components/ui/title";
+import { Button, Card, Text, Title } from "@tremor/react";
 import { ModelSelector } from "../../../../components/embedding/ModelSelector";
 import {
   AVAILABLE_MODELS,
@@ -11,7 +8,6 @@ import {
 } from "../../../../components/embedding/interfaces";
 import { CustomModelForm } from "../../../../components/embedding/CustomModelForm";
 import { useState } from "react";
-import CardSection from "@/components/admin/CardSection";
 export default function OpenEmbeddingPage({
   onSelectOpenSource,
   selectedProvider,
@@ -62,19 +58,15 @@ export default function OpenEmbeddingPage({
         to the Danswer team.
       </Text>
       {!configureModel && (
-        <Button
-          onClick={() => setConfigureModel(true)}
-          className="mt-4"
-          variant="secondary"
-        >
+        <Button onClick={() => setConfigureModel(true)} className="mt-4">
           Configure custom model
         </Button>
       )}
       {configureModel && (
         <div className="w-full flex">
-          <CardSection className="mt-4 2xl:w-4/6 mx-auto">
+          <Card className="mt-4 2xl:w-4/6 mx-auto">
             <CustomModelForm onSubmit={onSelectOpenSource} />
-          </CardSection>
+          </Card>
         </div>
       )}
     </div>

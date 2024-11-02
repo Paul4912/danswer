@@ -3,8 +3,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { MinimalUserSnapshot, User } from "@/lib/types";
 import { Persona } from "@/app/admin/assistants/interfaces";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Button, Divider } from "@tremor/react";
 import {
   FiEdit2,
   FiList,
@@ -131,9 +130,7 @@ function AssistantListItem({
         show={showSharingModal}
       />
       <div
-        className={`rounded-lg px-4 py-6 transition-all duration-900 hover:bg-background-125 ${
-          isDragging && "bg-background-125"
-        }`}
+        className={`rounded-lg px-4 py-6 transition-all duration-900 hover:bg-background-125 ${isDragging && "bg-background-125"}`}
       >
         <div className="flex justify-between items-center">
           <AssistantIcon assistant={assistant} />
@@ -449,7 +446,7 @@ export function AssistantsList() {
 
         {ownedButHiddenAssistants.length > 0 && (
           <>
-            <Separator />
+            <Divider />
 
             <h3 className="text-xl font-bold mb-4">Your Hidden Assistants</h3>
 

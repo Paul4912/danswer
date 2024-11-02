@@ -1,11 +1,12 @@
 import { ThreeDotsLoader } from "@/components/Loading";
 import { getDatesList, useQueryAnalytics } from "../lib";
-import Text from "@/components/ui/text";
-import Title from "@/components/ui/title";
-
-import { DateRangePickerValue } from "@/app/ee/admin/performance/DateRangeSelector";
-import CardSection from "@/components/admin/CardSection";
-import { AreaChartDisplay } from "@/components/ui/areaChart";
+import {
+  AreaChart,
+  Card,
+  Title,
+  Text,
+  DateRangePickerValue,
+} from "@tremor/react";
 
 export function FeedbackChart({
   timeRange,
@@ -43,8 +44,8 @@ export function FeedbackChart({
     );
 
     chart = (
-      <AreaChartDisplay
-        className="mt-4"
+      <AreaChart
+        className="mt-4 h-80"
         data={dateRange.map((dateStr) => {
           const queryAnalyticsForDate = dateToQueryAnalytics.get(dateStr);
           return {
@@ -65,10 +66,10 @@ export function FeedbackChart({
   }
 
   return (
-    <CardSection className="mt-8">
+    <Card className="mt-8">
       <Title>Feedback</Title>
       <Text>Thumbs Up / Thumbs Down over time</Text>
       {chart}
-    </CardSection>
+    </Card>
   );
 }

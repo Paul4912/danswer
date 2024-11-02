@@ -6,16 +6,17 @@ import { PopupSpec, usePopup } from "@/components/admin/connectors/Popup";
 import { useStandardAnswers, useStandardAnswerCategories } from "./hooks";
 import { ThreeDotsLoader } from "@/components/Loading";
 import { ErrorCallout } from "@/components/ErrorCallout";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
+  Button,
+  Divider,
+  Text,
   Table,
   TableHead,
   TableRow,
+  TableHeaderCell,
   TableBody,
   TableCell,
-} from "@/components/ui/table";
-
+} from "@tremor/react";
 import Link from "next/link";
 import { StandardAnswer, StandardAnswerCategory } from "@/lib/types";
 import { MagnifyingGlass } from "@phosphor-icons/react";
@@ -27,8 +28,6 @@ import { FilterDropdown } from "@/components/search/filtering/FilterDropdown";
 import { FiTag } from "react-icons/fi";
 import { PageSelector } from "@/components/PageSelector";
 import { CustomCheckbox } from "@/components/CustomCheckbox";
-import Text from "@/components/ui/text";
-import { TableHeader } from "@/components/ui/table";
 
 const NUM_RESULTS_PER_PAGE = 10;
 
@@ -291,14 +290,16 @@ const StandardAnswersTable = ({
         </div>
       </div>
       <div className="mx-auto">
-        <Table className="w-full flex items-stretch">
-          <TableHeader>
+        <Table>
+          <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableHead key={column.key}>{column.name}</TableHead>
+                <TableHeaderCell key={column.key}>
+                  {column.name}
+                </TableHeaderCell>
               ))}
             </TableRow>
-          </TableHeader>
+          </TableHead>
 
           <TableBody>
             {paginatedStandardAnswers.length > 0 ? (
@@ -403,12 +404,12 @@ const Main = () => {
       <div className="mb-2"></div>
 
       <Link className="flex mb-3 mt-2 w-fit" href="/admin/standard-answer/new">
-        <Button className="my-auto" variant="submit" size="sm">
+        <Button className="my-auto" color="green" size="xs">
           New Standard Answer
         </Button>
       </Link>
 
-      <Separator />
+      <Divider />
 
       <div>
         <StandardAnswersTable

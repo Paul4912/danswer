@@ -4,8 +4,7 @@ import { PopupSpec } from "@/components/admin/connectors/Popup";
 import { SlackBotTokens } from "@/lib/types";
 import { TextFormField } from "@/components/admin/connectors/Field";
 import { setSlackBotTokens } from "./lib";
-import CardSection from "@/components/admin/CardSection";
-import { Button } from "@/components/ui/button";
+import { Button, Card } from "@tremor/react";
 
 interface SlackBotTokensFormProps {
   onClose: () => void;
@@ -19,7 +18,7 @@ export const SlackBotTokensForm = ({
   existingTokens,
 }: SlackBotTokensFormProps) => {
   return (
-    <CardSection>
+    <Card>
       <Formik
         initialValues={existingTokens || { app_token: "", bot_token: "" }}
         validationSchema={Yup.object().shape({
@@ -58,13 +57,13 @@ export const SlackBotTokensForm = ({
               type="password"
             />
             <div className="flex">
-              <Button type="submit" disabled={isSubmitting} variant="submit">
+              <Button type="submit" disabled={isSubmitting}>
                 Set Tokens
               </Button>
             </div>
           </Form>
         )}
       </Formik>
-    </CardSection>
+    </Card>
   );
 };

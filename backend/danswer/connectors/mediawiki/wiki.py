@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import datetime
 import itertools
-import tempfile
 from collections.abc import Generator
 from collections.abc import Iterator
 from typing import Any
@@ -23,10 +22,7 @@ from danswer.connectors.models import Document
 from danswer.connectors.models import Section
 from danswer.utils.logger import setup_logger
 
-
 logger = setup_logger()
-
-pywikibot.config.base_dir = tempfile.TemporaryDirectory().name
 
 
 def pywikibot_timestamp_to_utc_datetime(
@@ -124,6 +120,7 @@ class MediaWikiConnector(LoadConnector, PollConnector):
         self.batch_size = batch_size
 
         # short names can only have ascii letters and digits
+
         self.family = family_class_dispatch(hostname, "WikipediaConnector")()
         self.site = pywikibot.Site(fam=self.family, code=language_code)
         self.categories = [
@@ -233,7 +230,5 @@ if __name__ == "__main__":
     print("All docs", all_docs)
     current = datetime.datetime.now().timestamp()
     one_day_ago = current - 30 * 24 * 60 * 60  # 30 days
-
     latest_docs = list(test_connector.poll_source(one_day_ago, current))
-
     print("Latest docs", latest_docs)

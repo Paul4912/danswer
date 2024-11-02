@@ -1,12 +1,10 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Modal } from "@/components/Modal";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { ModalWrapper } from "@/components/modals/ModalWrapper";
+import { Button, Textarea, TextInput } from "@tremor/react";
 import { useInputPrompt } from "../hooks";
 import { EditPromptModalProps } from "../interfaces";
-import { Input } from "@/components/ui/input";
 
 const EditPromptSchema = Yup.object().shape({
   prompt: Yup.string().required("Title is required"),
@@ -27,20 +25,20 @@ const EditPromptModal = ({
 
   if (error)
     return (
-      <Modal onOutsideClick={onClose} width="max-w-xl">
+      <ModalWrapper onClose={onClose} modalClassName="max-w-xl">
         <p>Failed to load prompt data</p>
-      </Modal>
+      </ModalWrapper>
     );
 
   if (!promptData)
     return (
-      <Modal onOutsideClick={onClose} width="w-full max-w-xl">
+      <ModalWrapper onClose={onClose} modalClassName="max-w-xl">
         <p>Loading...</p>
-      </Modal>
+      </ModalWrapper>
     );
 
   return (
-    <Modal onOutsideClick={onClose} width="w-full max-w-xl">
+    <ModalWrapper onClose={onClose} modalClassName="max-w-xl">
       <Formik
         initialValues={{
           prompt: promptData.prompt,
@@ -75,7 +73,7 @@ const EditPromptModal = ({
                   Title
                 </label>
                 <Field
-                  as={Input}
+                  as={TextInput}
                   id="prompt"
                   name="prompt"
                   placeholder="Title (e.g. 'Draft email')"
@@ -119,6 +117,7 @@ const EditPromptModal = ({
             <div className="mt-6">
               <Button
                 type="submit"
+                className="w-full"
                 disabled={
                   isSubmitting ||
                   (values.prompt === promptData.prompt &&
@@ -132,7 +131,7 @@ const EditPromptModal = ({
           </Form>
         )}
       </Formik>
-    </Modal>
+    </ModalWrapper>
   );
 };
 

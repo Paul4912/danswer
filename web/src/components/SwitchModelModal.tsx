@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import Text from "@/components/ui/text";
+import { Button, Text } from "@tremor/react";
 import { Modal } from "./Modal";
 import Link from "next/link";
 
@@ -30,7 +29,7 @@ export function SwitchModelModal({
 
         <div className="flex mt-4">
           <Link href="/admin/models/embedding" className="w-fit mx-auto">
-            <Button size="sm">Choose your Embedding Model</Button>
+            <Button size="xs">Choose your Embedding Model</Button>
           </Link>
         </div>
       </div>

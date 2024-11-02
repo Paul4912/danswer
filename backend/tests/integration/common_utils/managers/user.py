@@ -65,19 +65,15 @@ class UserManager:
             data=data,
             headers=headers,
         )
-
         response.raise_for_status()
+        result_cookie = next(iter(response.cookies), None)
 
-        cookies = response.cookies.get_dict()
-        session_cookie = cookies.get("fastapiusersauth")
-
-        if not session_cookie:
+        if not result_cookie:
             raise Exception("Failed to login")
 
         print(f"Logged in as {test_user.email}")
-
-        # Set cookies in the headers
-        test_user.headers["Cookie"] = f"fastapiusersauth={session_cookie}; "
+        cookie = f"{result_cookie.name}={result_cookie.value}"
+        test_user.headers["Cookie"] = cookie
         return test_user
 
     @staticmethod

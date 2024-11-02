@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useMemo,
-  useEffect,
-} from "react";
+import React, { createContext, useState, useContext, useMemo } from "react";
 import { Persona } from "@/app/admin/assistants/interfaces";
 import {
   classifyAssistants,
@@ -21,11 +15,6 @@ interface AssistantsContextProps {
   finalAssistants: Persona[];
   ownedButHiddenAssistants: Persona[];
   refreshAssistants: () => Promise<void>;
-  isImageGenerationAvailable: boolean;
-
-  // Admin only
-  editablePersonas: Persona[];
-  allAssistants: Persona[];
 }
 
 const AssistantsContext = createContext<AssistantsContextProps | undefined>(
@@ -46,57 +35,7 @@ export const AssistantsProvider: React.FC<{
   const [assistants, setAssistants] = useState<Persona[]>(
     initialAssistants || []
   );
-  const { user, isLoadingUser, isAdmin } = useUser();
-  const [editablePersonas, setEditablePersonas] = useState<Persona[]>([]);
-  const [allAssistants, setAllAssistants] = useState<Persona[]>([]);
-
-  const [isImageGenerationAvailable, setIsImageGenerationAvailable] =
-    useState<boolean>(false);
-
-  useEffect(() => {
-    const checkImageGenerationAvailability = async () => {
-      try {
-        const response = await fetch("/api/persona/image-generation-tool");
-        if (response.ok) {
-          const { is_available } = await response.json();
-          setIsImageGenerationAvailable(is_available);
-        }
-      } catch (error) {
-        console.error("Error checking image generation availability:", error);
-      }
-    };
-
-    checkImageGenerationAvailability();
-  }, []);
-
-  useEffect(() => {
-    const fetchPersonas = async () => {
-      if (!isAdmin) {
-        return;
-      }
-
-      try {
-        const [editableResponse, allResponse] = await Promise.all([
-          fetch("/api/admin/persona?get_editable=true"),
-          fetch("/api/admin/persona"),
-        ]);
-
-        if (editableResponse.ok) {
-          const editablePersonas = await editableResponse.json();
-          setEditablePersonas(editablePersonas);
-        }
-
-        if (allResponse.ok) {
-          const allPersonas = await allResponse.json();
-          setAllAssistants(allPersonas);
-        }
-      } catch (error) {
-        console.error("Error fetching personas:", error);
-      }
-    };
-
-    fetchPersonas();
-  }, [isAdmin]);
+  const { user } = useUser();
 
   const refreshAssistants = async () => {
     try {
@@ -153,7 +92,7 @@ export const AssistantsProvider: React.FC<{
       finalAssistants,
       ownedButHiddenAssistants,
     };
-  }, [user, assistants, isLoadingUser]);
+  }, [user, assistants]);
 
   return (
     <AssistantsContext.Provider
@@ -164,9 +103,6 @@ export const AssistantsProvider: React.FC<{
         finalAssistants,
         ownedButHiddenAssistants,
         refreshAssistants,
-        editablePersonas,
-        allAssistants,
-        isImageGenerationAvailable,
       }}
     >
       {children}

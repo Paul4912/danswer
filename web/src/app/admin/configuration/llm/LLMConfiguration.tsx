@@ -4,10 +4,7 @@ import { Modal } from "@/components/Modal";
 import { errorHandlingFetcher } from "@/lib/fetcher";
 import { useState } from "react";
 import useSWR from "swr";
-import { Callout } from "@/components/ui/callout";
-import Text from "@/components/ui/text";
-import Title from "@/components/ui/title";
-import { Button } from "@/components/ui/button";
+import { Button, Callout, Text, Title } from "@tremor/react";
 import { ThreeDotsLoader } from "@/components/Loading";
 import { FullLLMProvider, WellKnownLLMProviderDescriptor } from "./interfaces";
 import { PopupSpec, usePopup } from "@/components/admin/connectors/Popup";
@@ -79,7 +76,7 @@ function DefaultLLMProviderDisplay({
         </div>
 
         <div className="ml-auto">
-          <Button variant="navigate" onClick={() => setFormIsVisible(true)}>
+          <Button color="blue" size="xs" onClick={() => setFormIsVisible(true)}>
             Set up
           </Button>
         </div>
@@ -120,7 +117,7 @@ function AddCustomLLMProvider({
   }
 
   return (
-    <Button variant="navigate" onClick={() => setFormIsVisible(true)}>
+    <Button size="xs" onClick={() => setFormIsVisible(true)}>
       Add Custom LLM Provider
     </Button>
   );
@@ -157,7 +154,7 @@ export function LLMConfiguration() {
           />
         </>
       ) : (
-        <Callout type="warning" title="No LLM providers configured yet">
+        <Callout title="No LLM providers configured yet" color="yellow">
           Please set one up below in order to start using Danswer!
         </Callout>
       )}

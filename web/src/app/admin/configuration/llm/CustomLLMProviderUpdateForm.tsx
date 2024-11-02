@@ -1,7 +1,5 @@
 import { LoadingAnimation } from "@/components/Loading";
-import Text from "@/components/ui/text";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
+import { Button, Divider, Text } from "@tremor/react";
 import { AdvancedOptionsToggle } from "@/components/AdvancedOptionsToggle";
 import {
   ArrayHelpers,
@@ -234,7 +232,7 @@ export function CustomLLMProviderUpdateForm({
               placeholder="Name of the custom provider"
             />
 
-            <Separator />
+            <Divider />
 
             <SubLabel>
               Fill in the following as is needed. Refer to the LiteLLM
@@ -359,7 +357,8 @@ export function CustomLLMProviderUpdateForm({
                       arrayHelpers.push(["", ""]);
                     }}
                     className="mt-3"
-                    variant="next"
+                    color="green"
+                    size="xs"
                     type="button"
                     icon={FiPlus}
                   >
@@ -369,7 +368,7 @@ export function CustomLLMProviderUpdateForm({
               )}
             />
 
-            <Separator />
+            <Divider />
 
             {!existingLlmProvider?.deployment_name && (
               <TextArrayField
@@ -396,7 +395,7 @@ export function CustomLLMProviderUpdateForm({
               />
             )}
 
-            <Separator />
+            <Divider />
 
             <TextFormField
               name="default_model_name"
@@ -419,7 +418,7 @@ export function CustomLLMProviderUpdateForm({
               />
             )}
 
-            <Separator />
+            <Divider />
 
             <AdvancedOptionsToggle
               showAdvancedOptions={showAdvancedOptions}
@@ -442,7 +441,7 @@ export function CustomLLMProviderUpdateForm({
               )}
 
               <div className="flex w-full mt-4">
-                <Button type="submit" variant="submit">
+                <Button type="submit" size="xs">
                   {isTesting ? (
                     <LoadingAnimation text="Testing" />
                   ) : existingLlmProvider ? (
@@ -454,7 +453,9 @@ export function CustomLLMProviderUpdateForm({
                 {existingLlmProvider && (
                   <Button
                     type="button"
-                    variant="destructive"
+                    color="red"
+                    className="ml-3"
+                    size="xs"
                     icon={FiTrash}
                     onClick={async () => {
                       const response = await fetch(

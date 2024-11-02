@@ -9,14 +9,13 @@ import {
 import { useState } from "react";
 import { buildApiPath } from "@/lib/urlBuilder";
 import { Feedback } from "@/lib/types";
-
+import { DateRangePickerValue } from "@tremor/react";
 import {
   convertDateToEndOfDay,
   convertDateToStartOfDay,
   getXDaysAgo,
 } from "./dateUtils";
 import { THIRTY_DAYS } from "./DateRangeSelector";
-import { DateRangePickerValue } from "@/app/ee/admin/performance/DateRangeSelector";
 
 export const useTimeRange = () => {
   return useState<DateRangePickerValue>({

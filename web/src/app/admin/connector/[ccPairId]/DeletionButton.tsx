@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@tremor/react";
 import { CCPairFullInfo, ConnectorCredentialPairStatus } from "./types";
 import { usePopup } from "@/components/admin/connectors/Popup";
 import { FiTrash } from "react-icons/fi";
@@ -30,7 +30,8 @@ export function DeletionButton({ ccPair }: { ccPair: CCPairFullInfo }) {
     <div>
       {popup}
       <Button
-        variant="destructive"
+        size="xs"
+        color="red"
         onClick={() =>
           deleteCCPair(
             ccPair.connector.id,

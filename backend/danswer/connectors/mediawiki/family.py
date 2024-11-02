@@ -3,7 +3,6 @@ from __future__ import annotations
 import builtins
 import functools
 import itertools
-import tempfile
 from typing import Any
 from unittest import mock
 from urllib.parse import urlparse
@@ -18,8 +17,6 @@ from danswer.utils.logger import setup_logger
 
 
 logger = setup_logger()
-
-pywikibot.config.base_dir = tempfile.TemporaryDirectory().name
 
 
 @mock.patch.object(

@@ -4,8 +4,7 @@ import { AdminPageTitle } from "@/components/admin/Title";
 import { ConnectorIcon } from "@/components/icons/icons";
 import { SourceCategory, SourceMetadata } from "@/lib/search/interfaces";
 import { listSourceMetadata } from "@/lib/sources";
-import Title from "@/components/ui/title";
-import { Button } from "@/components/ui/button";
+import { Title, Text, Button } from "@tremor/react";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -33,7 +32,9 @@ function SourceTile({
       href={sourceMetadata.adminUrl}
     >
       <SourceIcon sourceType={sourceMetadata.internalName} iconSize={24} />
-      <p className="font-medium text-sm mt-2">{sourceMetadata.displayName}</p>
+      <Text className="font-medium text-sm mt-2">
+        {sourceMetadata.displayName}
+      </Text>
     </Link>
   );
 }
@@ -100,7 +101,9 @@ export default function Page() {
         title="Add Connector"
         farRightElement={
           <Link href="/admin/indexing/status">
-            <Button variant="success-reverse">See Connectors</Button>
+            <Button color="green" size="xs">
+              See Connectors
+            </Button>
           </Link>
         }
       />
@@ -122,7 +125,7 @@ export default function Page() {
             <div className="flex mt-8">
               <Title>{category}</Title>
             </div>
-            <p>{getCategoryDescription(category as SourceCategory)}</p>
+            <Text>{getCategoryDescription(category as SourceCategory)}</Text>
             <div className="flex flex-wrap gap-4 p-4">
               {sources.map((source, sourceInd) => (
                 <SourceTile

@@ -42,7 +42,6 @@ export interface User {
   current_token_created_at?: Date;
   current_token_expiry_length?: number;
   oidc_expiry?: Date;
-  organization_name: string | null;
 }
 
 export interface MinimalUserSnapshot {
@@ -242,6 +241,7 @@ const validSources = [
   "linear",
   "hubspot",
   "document360",
+  "requesttracker",
   "file",
   "google_sites",
   "loopio",

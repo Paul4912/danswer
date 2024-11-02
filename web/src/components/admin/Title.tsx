@@ -1,6 +1,6 @@
 "use client";
 import { HealthCheckBanner } from "../health/healthcheck";
-import { Separator } from "@/components/ui/separator";
+import { Divider } from "@tremor/react";
 
 export function AdminPageTitle({
   icon,
@@ -24,7 +24,7 @@ export function AdminPageTitle({
         </h1>
         {farRightElement && <div className="ml-auto">{farRightElement}</div>}
       </div>
-      {includeDivider ? <Separator /> : <div className="mb-6" />}
+      {includeDivider ? <Divider /> : <div className="mb-6" />}
     </div>
   );
 }

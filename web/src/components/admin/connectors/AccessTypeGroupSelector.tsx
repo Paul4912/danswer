@@ -1,10 +1,9 @@
 import { usePaidEnterpriseFeaturesEnabled } from "@/components/settings/usePaidEnterpriseFeaturesEnabled";
 import React, { useState, useEffect } from "react";
 import { FieldArray, ArrayHelpers, ErrorMessage, useField } from "formik";
-import Text from "@/components/ui/text";
-import { Separator } from "@/components/ui/separator";
+import { Text, Divider } from "@tremor/react";
 import { FiUsers } from "react-icons/fi";
-import { UserGroup, UserRole } from "@/lib/types";
+import { UserGroup, User, UserRole } from "@/lib/types";
 import { useUserGroups } from "@/lib/hooks";
 import { AccessType } from "@/lib/types";
 import { useUser } from "@/components/user/UserProvider";
@@ -82,7 +81,7 @@ export function AccessTypeGroupSelector({}: {}) {
         userGroups &&
         userGroups?.length > 0 && (
           <>
-            <Separator />
+            <Divider />
             <div className="flex mt-4 gap-x-2 items-center">
               <div className="block font-medium text-base">
                 Assign group access for this Connector
@@ -128,11 +127,7 @@ export function AccessTypeGroupSelector({}: {}) {
                             w-fit 
                             flex 
                             cursor-pointer 
-                            ${
-                              isSelected
-                                ? "bg-background-strong"
-                                : "hover:bg-hover"
-                            }
+                            ${isSelected ? "bg-background-strong" : "hover:bg-hover"}
                         `}
                           onClick={() => {
                             if (isSelected) {

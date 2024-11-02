@@ -21,6 +21,11 @@ export enum RerankerProvider {
 }
 
 export interface AdvancedSearchConfiguration {
+  model_name: string;
+  model_dim: number;
+  normalize: boolean;
+  query_prefix: string;
+  passage_prefix: string;
   index_name: string | null;
   multipass_indexing: boolean;
   multilingual_expansion: string[];

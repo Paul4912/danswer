@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@tremor/react";
+import { FiTrash } from "react-icons/fi";
 import { deletePersona } from "../lib";
 import { useRouter } from "next/navigation";
 import { SuccessfulPersonaUpdateRedirectType } from "../enums";
@@ -16,7 +17,8 @@ export function DeletePersonaButton({
 
   return (
     <Button
-      variant="destructive"
+      size="xs"
+      color="red"
       onClick={async () => {
         const response = await deletePersona(personaId);
         if (response.ok) {
@@ -29,6 +31,7 @@ export function DeletePersonaButton({
           alert(`Failed to delete persona - ${await response.text()}`);
         }
       }}
+      icon={FiTrash}
     >
       Delete
     </Button>

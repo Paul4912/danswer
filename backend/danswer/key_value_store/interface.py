@@ -14,8 +14,6 @@ class KvKeyNotFoundError(Exception):
 
 
 class KeyValueStore:
-    # In the Multi Tenant case, the tenant context is picked up automatically, it does not need to be passed in
-    # It's read from the global thread level variable
     @abc.abstractmethod
     def store(self, key: str, val: JSON_ro, encrypt: bool = False) -> None:
         raise NotImplementedError

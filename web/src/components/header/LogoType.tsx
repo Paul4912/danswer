@@ -37,9 +37,7 @@ export default function LogoType({
 
   return (
     <div
-      className={`${
-        hideOnMobile && "mobile:hidden"
-      } z-[100] mb-auto shrink-0 flex items-center text-xl font-bold`}
+      className={`${hideOnMobile && "mobile:hidden"} z-[100] mb-auto shrink-0 flex items-center text-xl font-bold`}
     >
       {toggleSidebar && page == "chat" ? (
         <button
@@ -57,16 +55,14 @@ export default function LogoType({
         </div>
       )}
       <div
-        className={`cursor-pointer ${
-          showArrow ? "desktop:invisible" : "invisible"
-        } break-words inline-block w-fit ml-2 text-text-700 text-xl`}
+        className={`cursor-pointer ${showArrow ? "desktop:invisible" : "invisible"} break-words inline-block w-fit ml-2 text-text-700 text-xl`}
       >
         <div className="max-w-[175px]">
           {enterpriseSettings && enterpriseSettings.application_name ? (
             <div className="w-full">
               <HeaderTitle>{enterpriseSettings.application_name}</HeaderTitle>
               {!NEXT_PUBLIC_DO_NOT_USE_TOGGLE_OFF_DANSWER_POWERED && (
-                <p className="text-xs text-subtle">Powered by Buddy</p>
+                <p className="text-xs text-subtle">Powered by Danswer</p>
               )}
             </div>
           ) : (
@@ -115,9 +111,9 @@ export default function LogoType({
             }}
           >
             {!toggled && !combinedSettings?.isMobile ? (
-              <RightToLineIcon className="text-sidebar-toggle" />
+              <RightToLineIcon />
             ) : (
-              <LeftToLineIcon className="text-sidebar-toggle" />
+              <LeftToLineIcon />
             )}
           </button>
         </Tooltip>

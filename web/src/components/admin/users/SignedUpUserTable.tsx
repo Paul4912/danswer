@@ -9,23 +9,17 @@ import {
   Table,
   TableHead,
   TableRow,
+  TableHeaderCell,
   TableBody,
   TableCell,
-} from "@/components/ui/table";
-
-import {
+  Button,
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from "@tremor/react";
 import { GenericConfirmModal } from "@/components/modals/GenericConfirmModal";
 import { useState } from "react";
 import { usePaidEnterpriseFeaturesEnabled } from "@/components/settings/usePaidEnterpriseFeaturesEnabled";
 import { DeleteEntityModal } from "@/components/modals/DeleteEntityModal";
-import { TableHeader } from "@/components/ui/table";
 
 interface Props {
   users: Array<User>;
@@ -82,46 +76,34 @@ const UserRoleDropdown = ({
         value={user.role}
         onValueChange={handleChange}
         disabled={isSettingRole}
+        className="w-40 mx-auto"
       >
-        <SelectTrigger>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {Object.entries(USER_ROLE_LABELS).map(([role, label]) =>
-            !isPaidEnterpriseFeaturesEnabled &&
-            (role === UserRole.CURATOR ||
-              role === UserRole.GLOBAL_CURATOR) ? null : (
-              <SelectItem
-                key={role}
-                value={role}
-                className={
-                  role === UserRole.CURATOR
-                    ? "opacity-30 cursor-not-allowed"
-                    : ""
-                }
-                title={
-                  role === UserRole.CURATOR
-                    ? "Curator role must be assigned in the Groups tab"
-                    : ""
-                }
-              >
-                {label}
-              </SelectItem>
-            )
-          )}
-        </SelectContent>
+        {Object.entries(USER_ROLE_LABELS).map(([role, label]) =>
+          !isPaidEnterpriseFeaturesEnabled &&
+          (role === UserRole.CURATOR ||
+            role === UserRole.GLOBAL_CURATOR) ? null : (
+            <SelectItem
+              key={role}
+              value={role}
+              className={
+                role === UserRole.CURATOR ? "opacity-30 cursor-not-allowed" : ""
+              }
+              title={
+                role === UserRole.CURATOR
+                  ? "Curator role must be assigned in the Groups tab"
+                  : ""
+              }
+            >
+              {label}
+            </SelectItem>
+          )
+        )}
       </Select>
       {showConfirmModal && (
         <GenericConfirmModal
           title="Change Curator Role"
-          message={`Warning: Switching roles from Curator to ${
-            USER_ROLE_LABELS[pendingRole as UserRole] ??
-            USER_ROLE_LABELS[user.role]
-          } will remove their status as individual curators from all groups.`}
-          confirmText={`Switch Role to ${
-            USER_ROLE_LABELS[pendingRole as UserRole] ??
-            USER_ROLE_LABELS[user.role]
-          }`}
+          message={`Warning: Switching roles from Curator to ${USER_ROLE_LABELS[pendingRole as UserRole] ?? USER_ROLE_LABELS[user.role]} will remove their status as individual curators from all groups.`}
+          confirmText={`Switch Role to ${USER_ROLE_LABELS[pendingRole as UserRole] ?? USER_ROLE_LABELS[user.role]}`}
           onClose={() => setShowConfirmModal(false)}
           onConfirm={handleConfirm}
         />
@@ -163,7 +145,7 @@ const DeactivaterButton = ({
       className="w-min"
       onClick={() => trigger({ user_email: user.email })}
       disabled={isMutating}
-      size="sm"
+      size="xs"
     >
       {deactivate ? "Deactivate" : "Activate"}
     </Button>
@@ -215,8 +197,8 @@ const DeleteUserButton = ({
         className="w-min"
         onClick={() => setShowDeleteModal(true)}
         disabled={isMutating}
-        size="sm"
-        variant="destructive"
+        size="xs"
+        color="red"
       >
         Delete
       </Button>
@@ -255,23 +237,23 @@ const SignedUpUserTable = ({
           />
         ) : null}
         <Table className="overflow-visible">
-          <TableHeader>
+          <TableHead>
             <TableRow>
-              <TableHead>Email</TableHead>
-              <TableHead className="text-center">Role</TableHead>
-              <TableHead className="text-center">Status</TableHead>
-              <TableHead>
+              <TableHeaderCell>Email</TableHeaderCell>
+              <TableHeaderCell className="text-center">Role</TableHeaderCell>
+              <TableHeaderCell className="text-center">Status</TableHeaderCell>
+              <TableHeaderCell>
                 <div className="flex">
                   <div className="ml-auto">Actions</div>
                 </div>
-              </TableHead>
+              </TableHeaderCell>
             </TableRow>
-          </TableHeader>
+          </TableHead>
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.email}</TableCell>
-                <TableCell className="w-40 ">
+                <TableCell>
                   <UserRoleDropdown
                     user={user}
                     onSuccess={onRoleChangeSuccess}

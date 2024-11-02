@@ -6,9 +6,7 @@ import {
 } from "@/components/admin/connectors/Field";
 import { createApiKey, updateApiKey } from "./lib";
 import { Modal } from "@/components/Modal";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import Text from "@/components/ui/text";
+import { Button, Divider, Text } from "@tremor/react";
 import { UserRole } from "@/lib/types";
 import { APIKey } from "./types";
 
@@ -34,7 +32,7 @@ export const DanswerApiKeyForm = ({
           {isUpdate ? "Update API Key" : "Create a new API Key"}
         </h2>
 
-        <Separator />
+        <Divider />
 
         <Formik
           initialValues={{
@@ -109,8 +107,8 @@ export const DanswerApiKeyForm = ({
 
               <Button
                 type="submit"
-                size="sm"
-                variant="submit"
+                size="xs"
+                color="green"
                 disabled={isSubmitting}
               >
                 {isUpdate ? "Update!" : "Create!"}

@@ -7,13 +7,15 @@ import {
   Table,
   TableHead,
   TableRow,
+  TableHeaderCell,
   TableBody,
   TableCell,
-} from "@/components/ui/table";
-import Text from "@/components/ui/text";
-import Title from "@/components/ui/title";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
+  Title,
+  Divider,
+  Badge,
+  Button,
+  Text,
+} from "@tremor/react";
 import { useConnectorCredentialIndexingStatus } from "@/lib/hooks";
 import { ConnectorIndexingStatus, DocumentSet } from "@/lib/types";
 import { useState } from "react";
@@ -33,8 +35,6 @@ import {
 import { DeleteButton } from "@/components/DeleteButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { TableHeader } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 
 const numToDisplay = 50;
 
@@ -134,15 +134,15 @@ const DocumentSetTable = ({
     <div>
       <Title>Existing Document Sets</Title>
       <Table className="overflow-visible mt-2">
-        <TableHeader>
+        <TableHead>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Connectors</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Public</TableHead>
-            <TableHead>Delete</TableHead>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell>Connectors</TableHeaderCell>
+            <TableHeaderCell>Status</TableHeaderCell>
+            <TableHeaderCell>Public</TableHeaderCell>
+            <TableHeaderCell>Delete</TableHeaderCell>
           </TableRow>
-        </TableHeader>
+        </TableHead>
         <TableBody>
           {sortedDocumentSets
             .slice((page - 1) * numToDisplay, page * numToDisplay)
@@ -188,32 +188,32 @@ const DocumentSetTable = ({
                   </TableCell>
                   <TableCell>
                     {documentSet.is_up_to_date ? (
-                      <Badge size="md" variant="success" icon={FiCheckCircle}>
+                      <Badge size="md" color="green" icon={FiCheckCircle}>
                         Up to Date
                       </Badge>
                     ) : documentSet.cc_pair_descriptors.length > 0 ? (
-                      <Badge size="md" variant="in_progress" icon={FiClock}>
+                      <Badge size="md" color="amber" icon={FiClock}>
                         Syncing
                       </Badge>
                     ) : (
-                      <Badge
-                        size="md"
-                        variant="destructive"
-                        icon={FiAlertTriangle}
-                      >
+                      <Badge size="md" color="red" icon={FiAlertTriangle}>
                         Deleting
                       </Badge>
                     )}
                   </TableCell>
                   <TableCell>
                     {documentSet.is_public ? (
-                      <Badge size="md" variant="success" icon={FiUnlock}>
+                      <Badge
+                        size="md"
+                        color={isEditable ? "green" : "gray"}
+                        icon={FiUnlock}
+                      >
                         Public
                       </Badge>
                     ) : (
                       <Badge
                         size="md"
-                        variant={isEditable ? "purple" : "outline"}
+                        color={isEditable ? "blue" : "gray"}
                         icon={FiLock}
                       >
                         Private
@@ -322,13 +322,15 @@ const Main = () => {
 
       <div className="flex mb-6">
         <Link href="/admin/documents/sets/new">
-          <Button variant="navigate">New Document Set</Button>
+          <Button size="xs" color="green" className="ml-2 my-auto">
+            New Document Set
+          </Button>
         </Link>
       </div>
 
       {documentSets.length > 0 && (
         <>
-          <Separator />
+          <Divider />
           <DocumentSetTable
             documentSets={documentSets}
             editableDocumentSets={editableDocumentSets}

@@ -1,7 +1,6 @@
-import CardSection from "@/components/admin/CardSection";
 import { getNameFromPath } from "@/lib/fileUtils";
 import { ValidSources } from "@/lib/types";
-import Title from "@/components/ui/title";
+import { List, ListItem, Card, Title } from "@tremor/react";
 
 function convertObjectToString(obj: any): string | any {
   // Check if obj is an object and not an array or null
@@ -74,37 +73,28 @@ export function AdvancedConfigDisplay({
   return (
     <>
       <Title className="mt-8 mb-2">Advanced Configuration</Title>
-      <CardSection>
-        <ul className="w-full text-sm divide-y divide-neutral-200 dark:divide-neutral-700">
+      <Card>
+        <List>
           {pruneFreq && (
-            <li
-              key={0}
-              className="w-full flex justify-between items-center py-2"
-            >
+            <ListItem key={0}>
               <span>Pruning Frequency</span>
               <span>{formatPruneFrequency(pruneFreq)}</span>
-            </li>
+            </ListItem>
           )}
           {refreshFreq && (
-            <li
-              key={1}
-              className="w-full flex justify-between items-center py-2"
-            >
+            <ListItem key={1}>
               <span>Refresh Frequency</span>
               <span>{formatRefreshFrequency(refreshFreq)}</span>
-            </li>
+            </ListItem>
           )}
           {indexingStart && (
-            <li
-              key={2}
-              className="w-full flex justify-between items-center py-2"
-            >
+            <ListItem key={2}>
               <span>Indexing Start</span>
               <span>{formatDate(indexingStart)}</span>
-            </li>
+            </ListItem>
           )}
-        </ul>
-      </CardSection>
+        </List>
+      </Card>
     </>
   );
 }
@@ -126,19 +116,16 @@ export function ConfigDisplay({
   return (
     <>
       <Title className="mb-2">Configuration</Title>
-      <CardSection>
-        <ul className="w-full text-sm divide-y divide-neutral-200 dark:divide-neutral-700">
+      <Card>
+        <List>
           {configEntries.map(([key, value]) => (
-            <li
-              key={key}
-              className="w-full flex justify-between items-center py-2"
-            >
+            <ListItem key={key}>
               <span>{key}</span>
               <span>{convertObjectToString(value) || "-"}</span>
-            </li>
+            </ListItem>
           ))}
-        </ul>
-      </CardSection>
+        </List>
+      </Card>
     </>
   );
 }

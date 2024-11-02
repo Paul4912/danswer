@@ -22,24 +22,33 @@ export default async function GalleryPage({
   const {
     user,
     chatSessions,
+    assistants,
     folders,
     openedFolders,
-    toggleSidebar,
     shouldShowWelcomeModal,
+    toggleSidebar,
+    hasAnyConnectors,
+    hasImageCompatibleModel,
   } = data;
 
   return (
     <>
-      {shouldShowWelcomeModal && <WelcomeModal user={user} />}
+      <AssistantsProvider
+        initialAssistants={assistants}
+        hasAnyConnectors={hasAnyConnectors}
+        hasImageCompatibleModel={hasImageCompatibleModel}
+      >
+        {shouldShowWelcomeModal && <WelcomeModal user={user} />}
 
-      <InstantSSRAutoRefresh />
+        <InstantSSRAutoRefresh />
 
-      <WrappedAssistantsGallery
-        initiallyToggled={toggleSidebar}
-        chatSessions={chatSessions}
-        folders={folders}
-        openedFolders={openedFolders}
-      />
+        <WrappedAssistantsGallery
+          initiallyToggled={toggleSidebar}
+          chatSessions={chatSessions}
+          folders={folders}
+          openedFolders={openedFolders}
+        />
+      </AssistantsProvider>
     </>
   );
 }

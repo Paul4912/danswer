@@ -3,9 +3,7 @@
 import { ThreeDotsLoader } from "@/components/Loading";
 import { AdminPageTitle } from "@/components/admin/Title";
 import { errorHandlingFetcher } from "@/lib/fetcher";
-import Text from "@/components/ui/text";
-import Title from "@/components/ui/title";
-import { Button } from "@/components/ui/button";
+import { Button, Card, Text, Title } from "@tremor/react";
 import useSWR from "swr";
 import { ModelPreview } from "../../../../components/embedding/ModelSelector";
 import {
@@ -30,7 +28,6 @@ import { SavedSearchSettings } from "../../embeddings/interfaces";
 import UpgradingPage from "./UpgradingPage";
 import { useContext } from "react";
 import { SettingsContext } from "@/components/settings/SettingsProvider";
-import CardSection from "@/components/admin/CardSection";
 
 function Main() {
   const settings = useContext(SettingsContext);
@@ -104,7 +101,7 @@ function Main() {
 
           <Title className="mb-2 mt-8 !text-2xl">Post-processing</Title>
 
-          <CardSection className="!mr-auto mt-8 !w-96">
+          <Card className="!mr-auto mt-8 !w-96">
             {searchSettings && (
               <>
                 <div className="px-1 w-full rounded-lg">
@@ -157,12 +154,10 @@ function Main() {
                 </div>
               </>
             )}
-          </CardSection>
+          </Card>
 
           <Link href="/admin/embeddings">
-            <Button variant="navigate" className="mt-8">
-              Update Search Settings
-            </Button>
+            <Button className="mt-8">Update Search Settings</Button>
           </Link>
         </>
       ) : (

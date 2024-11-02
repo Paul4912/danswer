@@ -15,7 +15,7 @@ import {
   usePublicCredentials,
   useConnectorCredentialIndexingStatus,
 } from "@/lib/hooks";
-import Title from "@/components/ui/title";
+import { Title } from "@tremor/react";
 import { GmailConfig } from "@/lib/connectors/connectors";
 import { useUser } from "@/components/user/UserProvider";
 

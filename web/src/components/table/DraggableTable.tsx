@@ -2,9 +2,9 @@ import {
   Table,
   TableHead,
   TableRow,
-  TableHeader,
+  TableHeaderCell,
   TableBody,
-} from "@/components/ui/table";
+} from "@tremor/react";
 import React, { useMemo, useState } from "react";
 import {
   closestCenter,
@@ -88,14 +88,14 @@ export function DraggableTable({
       modifiers={[restrictToVerticalAxis]}
     >
       <Table className="overflow-y-visible">
-        <TableHeader>
+        <TableHead>
           <TableRow>
-            <TableHead></TableHead>
+            <TableHeaderCell></TableHeaderCell>
             {headers.map((header, ind) => (
-              <TableHead key={ind}>{header}</TableHead>
+              <TableHeaderCell key={ind}>{header}</TableHeaderCell>
             ))}
           </TableRow>
-        </TableHeader>
+        </TableHead>
 
         <TableBody>
           <SortableContext items={items} strategy={verticalListSortingStrategy}>

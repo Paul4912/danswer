@@ -153,15 +153,13 @@ export default function SidebarWrapper<T extends object>({
           />
 
           <div
-            className={`mt-4 w-full ${
-              size == "lg" ? "max-w-4xl" : "max-w-3xl"
-            } mx-auto`}
+            className={`mt-4 w-full ${size == "lg" ? "max-w-4xl" : "max-w-3xl"} mx-auto`}
           >
             {children}
           </div>
         </div>
       </div>
-      <FixedLogo backgroundToggled={toggledSidebar || showDocSidebar} />
+      <FixedLogo />
     </div>
   );
 }

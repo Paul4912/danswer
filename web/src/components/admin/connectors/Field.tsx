@@ -1,3 +1,4 @@
+import { Button } from "@tremor/react";
 import {
   ArrayHelpers,
   ErrorMessage,
@@ -8,14 +9,7 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import { FormBodyBuilder } from "./types";
-import { StringOrNumberOption } from "@/components/Dropdown";
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { DefaultDropdown, StringOrNumberOption } from "@/components/Dropdown";
 import { FiInfo, FiPlus, FiX } from "react-icons/fi";
 import {
   TooltipProvider,
@@ -28,7 +22,6 @@ import { FaMarkdown } from "react-icons/fa";
 import { useState } from "react";
 import remarkGfm from "remark-gfm";
 import { EditIcon } from "@/components/icons/icons";
-import { Button } from "@/components/ui/button";
 
 export function SectionHeader({
   children,
@@ -226,7 +219,7 @@ export function TextFormField({
             ${small && "text-sm"}
             border 
             border-border 
-            rounded-md
+            rounded-lg
             w-full 
             py-2 
             px-3 
@@ -545,8 +538,8 @@ export function TextArrayField<T extends Yup.AnyObject>({
                 arrayHelpers.push("");
               }}
               className="mt-3"
-              variant="update"
-              size="sm"
+              color="green"
+              size="xs"
               type="button"
               icon={FiPlus}
             >
@@ -614,32 +607,15 @@ export function SelectorFormField({
       )}
       {subtext && <SubLabel>{subtext}</SubLabel>}
       <div className="mt-2">
-        <Select
-          value={field.value}
-          onValueChange={
-            onSelect || ((selected) => setFieldValue(name, selected))
-          }
+        <DefaultDropdown
+          options={options}
+          selected={field.value}
+          onSelect={onSelect || ((selected) => setFieldValue(name, selected))}
+          includeDefault={includeDefault}
+          side={side}
+          maxHeight={maxHeight}
           defaultValue={defaultValue}
-        >
-          <SelectTrigger>
-            <SelectValue
-              placeholder={includeDefault ? "Select..." : undefined}
-            />
-          </SelectTrigger>
-          <SelectContent
-            side={side}
-            className={maxHeight ? `max-h-[${maxHeight}]` : undefined}
-          >
-            {includeDefault && (
-              <SelectItem value="default">Select...</SelectItem>
-            )}
-            {options.map((option) => (
-              <SelectItem key={option.value} value={String(option.value)}>
-                {option.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        />
       </div>
 
       <ErrorMessage

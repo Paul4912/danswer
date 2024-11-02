@@ -56,11 +56,7 @@ class PollConnector(BaseConnector):
 
 class SlimConnector(BaseConnector):
     @abc.abstractmethod
-    def retrieve_all_slim_documents(
-        self,
-        start: SecondsSinceUnixEpoch | None = None,
-        end: SecondsSinceUnixEpoch | None = None,
-    ) -> GenerateSlimDocumentOutput:
+    def retrieve_all_slim_documents(self) -> GenerateSlimDocumentOutput:
         raise NotImplementedError
 
 

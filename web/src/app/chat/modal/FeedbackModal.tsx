@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FeedbackType } from "../types";
-import { Modal } from "@/components/Modal";
+import { ModalWrapper } from "@/components/modals/ModalWrapper";
 import { FilledLikeIcon } from "@/components/icons/icons";
 
 const predefinedPositiveFeedbackOptions =
@@ -49,7 +49,7 @@ export const FeedbackModal = ({
       : predefinedNegativeFeedbackOptions;
 
   return (
-    <Modal onOutsideClick={onClose} width="max-w-3xl">
+    <ModalWrapper onClose={onClose} modalClassName="max-w-3xl">
       <>
         <h2 className="text-2xl text-emphasis font-bold mb-4 flex">
           <div className="mr-1 my-auto">
@@ -112,6 +112,6 @@ export const FeedbackModal = ({
           </button>
         </div>
       </>
-    </Modal>
+    </ModalWrapper>
   );
 };

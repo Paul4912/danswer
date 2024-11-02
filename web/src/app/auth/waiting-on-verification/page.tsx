@@ -6,7 +6,7 @@ import {
 import { redirect } from "next/navigation";
 import { HealthCheckBanner } from "@/components/health/healthcheck";
 import { User } from "@/lib/types";
-import Text from "@/components/ui/text";
+import { Text } from "@tremor/react";
 import { RequestNewVerificationEmail } from "./RequestNewVerificationEmail";
 import { Logo } from "@/components/Logo";
 

@@ -3,7 +3,7 @@
 import { Persona } from "@/app/admin/assistants/interfaces";
 import { AssistantIcon } from "@/components/assistants/AssistantIcon";
 import { User } from "@/lib/types";
-import { Button } from "@/components/ui/button";
+import { Button } from "@tremor/react";
 import { useState } from "react";
 import { FiList, FiMinus, FiPlus } from "react-icons/fi";
 import { AssistantsPageTitle } from "../AssistantsPageTitle";
@@ -91,8 +91,7 @@ export function AssistantGalleryCard({
                     });
                   }
                 }}
-                size="sm"
-                variant="destructive"
+                size="xs"
               >
                 Deselect
               </Button>
@@ -120,8 +119,8 @@ export function AssistantGalleryCard({
                     });
                   }
                 }}
-                size="sm"
-                variant="submit"
+                size="xs"
+                color="green"
               >
                 Add
               </Button>

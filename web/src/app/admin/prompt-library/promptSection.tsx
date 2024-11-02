@@ -3,9 +3,7 @@
 import { usePopup } from "@/components/admin/connectors/Popup";
 import { ThreeDotsLoader } from "@/components/Loading";
 import { ErrorCallout } from "@/components/ErrorCallout";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import Text from "@/components/ui/text";
+import { Button, Divider, Text } from "@tremor/react";
 import { useState } from "react";
 import AddPromptModal from "./modals/AddPromptModal";
 import EditPromptModal from "./modals/EditPromptModal";
@@ -93,9 +91,7 @@ export const PromptSection = ({
 
   return (
     <div
-      className={`w-full ${
-        centering ? "flex-col flex justify-center" : ""
-      } mb-8`}
+      className={`w-full ${centering ? "flex-col flex justify-center" : ""} mb-8`}
     >
       {popup}
 
@@ -128,13 +124,13 @@ export const PromptSection = ({
       <Button
         onClick={() => setNewPrompt(true)}
         className={centering ? "mx-auto" : ""}
-        variant="navigate"
-        size="sm"
+        color="green"
+        size="xs"
       >
         New Prompt
       </Button>
 
-      <Separator />
+      <Divider />
 
       <div>
         <PromptLibraryTable

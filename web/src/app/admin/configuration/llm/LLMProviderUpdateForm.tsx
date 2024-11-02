@@ -1,8 +1,6 @@
 import { LoadingAnimation } from "@/components/Loading";
 import { AdvancedOptionsToggle } from "@/components/AdvancedOptionsToggle";
-import Text from "@/components/ui/text";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
+import { Button, Divider, Text } from "@tremor/react";
 import { Form, Formik } from "formik";
 import { FiTrash } from "react-icons/fi";
 import { LLM_PROVIDERS_ADMIN_URL } from "./constants";
@@ -146,9 +144,7 @@ export function LLMProviderUpdateForm({
         }
 
         const response = await fetch(
-          `${LLM_PROVIDERS_ADMIN_URL}${
-            existingLlmProvider ? "" : "?is_creation=true"
-          }`,
+          `${LLM_PROVIDERS_ADMIN_URL}${existingLlmProvider ? "" : "?is_creation=true"}`,
           {
             method: "PUT",
             headers: {
@@ -277,7 +273,7 @@ export function LLMProviderUpdateForm({
 
           {!(hideAdvanced && llmProviderDescriptor.name != "azure") && (
             <>
-              <Separator />
+              <Divider />
 
               {llmProviderDescriptor.llm_names.length > 0 ? (
                 <SelectorFormField
@@ -336,7 +332,7 @@ export function LLMProviderUpdateForm({
 
               {llmProviderDescriptor.name != "azure" && (
                 <>
-                  <Separator />
+                  <Divider />
 
                   <AdvancedOptionsToggle
                     showAdvancedOptions={showAdvancedOptions}
@@ -387,7 +383,7 @@ export function LLMProviderUpdateForm({
             {testError && <Text className="text-error mt-2">{testError}</Text>}
 
             <div className="flex w-full mt-4">
-              <Button type="submit" variant="submit">
+              <Button type="submit" size="xs">
                 {isTesting ? (
                   <LoadingAnimation text="Testing" />
                 ) : existingLlmProvider ? (
@@ -399,8 +395,9 @@ export function LLMProviderUpdateForm({
               {existingLlmProvider && (
                 <Button
                   type="button"
-                  variant="destructive"
+                  color="red"
                   className="ml-3"
+                  size="xs"
                   icon={FiTrash}
                   onClick={async () => {
                     const response = await fetch(

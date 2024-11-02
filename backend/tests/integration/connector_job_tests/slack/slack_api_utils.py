@@ -73,7 +73,9 @@ def _clear_slack_conversation_members(
         if member_id == admin_user_id:
             continue
         try:
-            slack_client.conversations_kick(channel=channel_id, user=member_id)
+            make_slack_api_call_w_retries(
+                slack_client.conversations_kick, channel=channel_id, user=member_id
+            )
             print(f"Kicked member: {member_id}")
         except Exception as e:
             if "cant_kick_self" in str(e):
@@ -81,7 +83,9 @@ def _clear_slack_conversation_members(
             print(f"Error kicking member: {e}")
             print(member_id)
     try:
-        slack_client.conversations_unarchive(channel=channel_id)
+        make_slack_api_call_w_retries(
+            slack_client.conversations_unarchive, channel=channel_id
+        )
         channel["is_archived"] = False
     except Exception:
         # Channel is already unarchived
@@ -94,7 +98,11 @@ def _add_slack_conversation_members(
     channel_id = _get_slack_channel_id(channel)
     for user_id in member_ids:
         try:
-            slack_client.conversations_invite(channel=channel_id, users=user_id)
+            make_slack_api_call_w_retries(
+                slack_client.conversations_invite,
+                channel=channel_id,
+                users=user_id,
+            )
         except Exception as e:
             if "already_in_channel" in str(e):
                 continue
@@ -121,7 +129,11 @@ def _delete_slack_conversation_messages(
             try:
                 if not (ts := message.get("ts")):
                     raise ValueError("Message timestamp is missing")
-                slack_client.chat_delete(channel=channel_id, ts=ts)
+                make_slack_api_call_w_retries(
+                    slack_client.chat_delete,
+                    channel=channel_id,
+                    ts=ts,
+                )
             except Exception as e:
                 print(f"Error deleting message: {e}")
                 print(message)
@@ -153,12 +165,16 @@ def _build_slack_channel_from_name(
         )
 
     try:
-        slack_client.conversations_unarchive(channel=channel_response["channel"]["id"])
+        channel_response = make_slack_api_call_w_retries(
+            slack_client.conversations_unarchive,
+            channel=channel_response["channel"]["id"],
+        )
     except Exception:
         # Channel is already unarchived
         pass
     try:
-        slack_client.conversations_invite(
+        channel_response = make_slack_api_call_w_retries(
+            slack_client.conversations_invite,
             channel=channel_response["channel"]["id"],
             users=[admin_user_id],
         )
@@ -286,6 +302,10 @@ class SlackManager:
             # "done" in the channel name indicates that this channel is free to be used for a new test
             new_name = f"done_{str(uuid4())}"
             try:
-                slack_client.conversations_rename(channel=channel["id"], name=new_name)
+                make_slack_api_call_w_retries(
+                    slack_client.conversations_rename,
+                    channel=channel["id"],
+                    name=new_name,
+                )
             except SlackApiError as e:
                 print(f"Error renaming channel {channel['id']}: {e}")

@@ -2,8 +2,7 @@
 
 import { Label, SubLabel } from "@/components/admin/connectors/Field";
 import { usePopup } from "@/components/admin/connectors/Popup";
-import Title from "@/components/ui/title";
-import { Button } from "@/components/ui/button";
+import { Title, Button } from "@tremor/react";
 import { Settings } from "./interfaces";
 import { useRouter } from "next/navigation";
 import { DefaultDropdown, Option } from "@/components/Dropdown";
@@ -272,17 +271,13 @@ export function SettingsForm() {
           />
           <Button
             onClick={handleSetChatRetention}
-            variant="submit"
-            size="sm"
+            color="green"
+            size="xs"
             className="mr-3"
           >
             Set Retention Limit
           </Button>
-          <Button
-            onClick={handleClearChatRetention}
-            variant="default"
-            size="sm"
-          >
+          <Button onClick={handleClearChatRetention} color="blue" size="xs">
             Retain All
           </Button>
         </>

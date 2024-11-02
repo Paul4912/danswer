@@ -6,11 +6,8 @@ import pytest
 from pytest_mock import MockerFixture
 
 from danswer.llm.answering.answer import Answer
-from danswer.llm.answering.models import AnswerStyleConfig
-from danswer.llm.answering.models import PromptConfig
 from danswer.one_shot_answer.answer_question import AnswerObjectIterator
 from danswer.tools.force import ForceUseTool
-from danswer.tools.tool_implementations.search.search_tool import SearchTool
 from tests.regression.answer_quality.run_qa import _process_and_write_query_results
 
 
@@ -27,43 +24,39 @@ from tests.regression.answer_quality.run_qa import _process_and_write_query_resu
         },
     ],
 )
-def test_skip_gen_ai_answer_generation_flag(
-    config: dict[str, Any],
-    mock_search_tool: SearchTool,
-    answer_style_config: AnswerStyleConfig,
-    prompt_config: PromptConfig,
-) -> None:
-    question = config["question"]
-    skip_gen_ai_answer_generation = config["skip_gen_ai_answer_generation"]
-
+def test_skip_gen_ai_answer_generation_flag(config: dict[str, Any]) -> None:
+    search_tool = Mock()
+    search_tool.name = "search"
+    search_tool.run = Mock()
+    search_tool.run.return_value = [Mock()]
     mock_llm = Mock()
     mock_llm.config = Mock()
     mock_llm.config.model_name = "gpt-4o-mini"
     mock_llm.stream = Mock()
     mock_llm.stream.return_value = [Mock()]
     answer = Answer(
-        question=question,
-        answer_style_config=answer_style_config,
-        prompt_config=prompt_config,
+        question=config["question"],
+        answer_style_config=Mock(),
+        prompt_config=Mock(),
         llm=mock_llm,
         single_message_history="history",
-        tools=[mock_search_tool],
+        tools=[search_tool],
         force_use_tool=(
             ForceUseTool(
-                tool_name=mock_search_tool.name,
-                args={"query": question},
+                tool_name=search_tool.name,
+                args={"query": config["question"]},
                 force_use=True,
             )
         ),
         skip_explicit_tool_calling=True,
         return_contexts=True,
-        skip_gen_ai_answer_generation=skip_gen_ai_answer_generation,
+        skip_gen_ai_answer_generation=config["skip_gen_ai_answer_generation"],
     )
     count = 0
     for _ in cast(AnswerObjectIterator, answer.processed_streamed_output):
         count += 1
-    assert count == 3 if skip_gen_ai_answer_generation else 4
-    if not skip_gen_ai_answer_generation:
+    assert count == 2
+    if not config["skip_gen_ai_answer_generation"]:
         mock_llm.stream.assert_called_once()
     else:
         mock_llm.stream.assert_not_called()
