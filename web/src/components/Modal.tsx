@@ -1,5 +1,5 @@
 "use client";
-import { Divider } from "@tremor/react";
+import { Separator } from "@/components/ui/separator";
 import { FiX } from "react-icons/fi";
 import { IconProps, XIcon } from "./icons/icons";
 import { useRef } from "react";
@@ -54,9 +54,9 @@ export function Modal({
             e.stopPropagation();
           }
         }}
-        className={`bg-background text-emphasis rounded shadow-2xl 
+        className={`bg-background  text-emphasis rounded shadow-2xl 
           transform transition-all duration-300 ease-in-out
-          ${width ?? "w-11/12 max-w-5xl"}
+          ${width ?? "w-11/12 max-w-4xl"}
           ${noPadding ? "" : "p-10"}
           ${className || ""}`}
       >
@@ -85,10 +85,10 @@ export function Modal({
                   {icon && icon({ size: 30 })}
                 </h2>
               </div>
-              {!hideDividerForTitle && <Divider />}
+              {!hideDividerForTitle && <Separator />}
             </>
           )}
-          {children}
+          <div className="max-h-[60vh] overflow-y-scroll">{children}</div>
         </div>
       </div>
     </div>
