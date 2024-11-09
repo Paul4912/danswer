@@ -243,6 +243,7 @@ body {
 .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background-color: #1b1f27;
   font-size: 0.875rem;
+  color: var(--text-600);
 }
 
 pre[class*="language-"],
@@ -338,7 +339,12 @@ ul > li > p {
   display: inline;
 }
 
-/* List Item Text Color */
+/* List Item Text Color
 li {
+  color: var(--text-600);
+} */
+
+  /* Apply default text color to all text elements */
+body, h1, h2, h3, h4, h5, h6, p, span, strong, em, blockquote, li, a {
   color: var(--text-600);
 }

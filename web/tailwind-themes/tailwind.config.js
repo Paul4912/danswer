@@ -18,6 +18,20 @@ module.exports = {
     transparent: "transparent",
     current: "currentColor",
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            '--tw-prose-headings': '#ffffff',
+            '--tw-prose-body': '#cccccc',
+            '--tw-prose-links': '#7ab0ff',
+            '--tw-prose-bold': '#ffffff',
+            '--tw-prose-pre-bg': '#1e293b',
+            '--tw-prose-pre-code': '#d1d5db',
+            '--tw-prose-quote-borders': '#444444',
+          },
+        },
+      },
+
       transitionProperty: {
         spacing: "margin, padding",
       },
