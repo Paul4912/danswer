@@ -113,8 +113,8 @@ module.exports = {
         "background-inverted": "var(--background-inverted)",
         "background-emphasis": "var(--background-emphasis)",
         "background-strong": "var(--background-strong)",
-        "background-search": "var(--white)",
-
+        // "background-search": "var(--white)",
+        "background-search": "var(--background-100)",
         // colors for sidebar in chat, search, and manage settings
         "background-sidebar": "var(--background-100)",
         "background-chatbar": "var(--background-100)",
@@ -156,7 +156,8 @@ module.exports = {
         "submit-background": "var(--background-800)",
         "disabled-submit-background": "var(--background-400)",
 
-        input: "var(--white)",
+        // input: "var(--white)",
+        input: "var(--background-100)",
 
         "text-50": "var(--text-50)",
         "text-100": "var(--text-100)",

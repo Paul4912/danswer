@@ -31,7 +31,8 @@ services:
       - SMTP_PASS=BIafi405bPXpQDa5omj8B4DIb/wqJc4drNVnEbo/+1hl
       - ENABLE_EMAIL_INVITES=true # If enabled, will send users (using SMTP settings) an email to join the workspace
       #- EMAIL_FROM=${EMAIL_FROM:-}
-      - EMAIL_FROM=noreply@enigmas.io
+      #- EMAIL_FROM=noreply@enigmas.io
+      - EMAIL_FROM=buddy@enigmas.io
       - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID:-}
       - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET:-}
       - OPENID_CONFIG_URL=${OPENID_CONFIG_URL:-}
