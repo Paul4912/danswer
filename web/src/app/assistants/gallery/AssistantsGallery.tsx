@@ -174,7 +174,7 @@ export function AssistantsGallery() {
     <>
       {popup}
       <div className="mx-auto w-searchbar-xs 2xl:w-searchbar-sm 3xl:w-searchbar">
-        <AssistantsPageTitle>Assistant Gallery</AssistantsPageTitle>
+        <AssistantsPageTitle>Specialist Gallery</AssistantsPageTitle>
 
         <div className="grid grid-cols-2 gap-4 mt-4 mb-6">
           <Button
@@ -182,7 +182,7 @@ export function AssistantsGallery() {
             className="w-full py-3 text-lg rounded-full bg-background-800 text-white hover:bg-background-800 transition duration-300 ease-in-out"
             icon={FiPlus}
           >
-            Create New Assistant
+            Create New Specialists
           </Button>
 
           <Button
@@ -190,7 +190,7 @@ export function AssistantsGallery() {
             className="w-full hover:border-border-strong py-3 text-lg rounded-full bg-white border border-border shadow text-text-700 hover:bg-background-50 transition duration-300 ease-in-out"
             icon={FiList}
           >
-            Your Assistants
+            Your Specialists
           </Button>
         </div>
 

@@ -276,7 +276,7 @@ if __name__ == "__main__":
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": "Can you fetch assistant with ID 10"},
+            {"role": "user", "content": "Can you fetch specialist with ID 10"},
         ],
         tools=[tool.tool_definition() for tool in tools],  # type: ignore
     )
