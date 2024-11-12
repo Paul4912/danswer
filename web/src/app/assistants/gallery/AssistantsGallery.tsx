@@ -132,7 +132,7 @@ export function AssistantGalleryCard({
 
       <p className="text-sm mt-2">{assistant.description}</p>
       <p className="text-subtle text-sm my-2">
-        Author: {assistant.owner?.email || "Danswer"}
+        Author: {assistant.owner?.email || "Buddy"}
       </p>
       {assistant.tools.length > 0 && (
         <AssistantTools list assistant={assistant} />
@@ -248,7 +248,7 @@ export function AssistantsGallery() {
           <>
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-2 text-text-900">
-                Default Assistants
+                Default Specialists
               </h2>
 
               <h3 className="text-lg text-text-500">
