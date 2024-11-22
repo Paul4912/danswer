@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: web-server
-        image: public.ecr.aws/s0d3n4f3/buddy-danswer/web:latest
+        image: public.ecr.aws/s0d3n4f3/buddy-danswer/web:test
         imagePullPolicy: Always
         ports:
         - containerPort: 3000

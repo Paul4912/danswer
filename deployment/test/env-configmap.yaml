@@ -79,7 +79,7 @@ data:
   LOG_VESPA_TIMING_INFORMATION: ""
   # Shared or Non-backend Related
   INTERNAL_URL: "http://api-server-service:80"  # for web server
-  WEB_DOMAIN: "http://buddy.enigmas.io:8080"  # for web server and api server
+  WEB_DOMAIN: "http://test.enigmas.io:8080"  # for web server and api server
   DOMAIN: "localhost"  # for nginx
   # Chat Configs
   HARD_DELETE_CHATS: ""
