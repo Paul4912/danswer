@@ -250,6 +250,56 @@ The Buddy Team</p>
         s.login(SMTP_USER, SMTP_PASS)
         s.send_message(msg)
 
+# Written by Buddy
+def send_invite_welcome_email(
+    recipient_email: str,
+    mail_from: str = EMAIL_FROM,
+) -> None:
+    msg = MIMEMultipart('alternative')
+    msg["Subject"] = "Welcome to Buddy - You're Invited!"
+    msg["To"] = recipient_email
+    if mail_from:
+        msg["From"] = mail_from
+
+    link = f"{WEB_DOMAIN}/auth/signup"
+
+    # Plain text version
+    text_content = f"""
+Welcome to Buddy!
+
+You have been invited to join Buddy, your AI-powered co-worker.
+
+Click here to join: {link}
+
+For any issues or support, please email us at buddy@enigmas.io
+
+Best regards,
+The Buddy Team
+    """.strip()
+
+    # HTML version with hyperlink
+    html_content = f"""
+<p>Welcome to Buddy!</p>
+
+<p>You have been invited to join Buddy, your AI-powered co-worker.</p>
+
+<p>Please <a href="{link}">click here</a> to join.</p>
+
+<p>For any issues or support, please email us at <a href="mailto:buddy@enigmas.io">buddy@enigmas.io</a></p>
+
+<p>Best regards,<br>
+The Buddy Team</p>
+    """.strip()
+
+    # Attach both versions
+    msg.attach(MIMEText(text_content, 'plain'))
+    msg.attach(MIMEText(html_content, 'html'))
+
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as s:
+        s.starttls()
+        s.login(SMTP_USER, SMTP_PASS)
+        s.send_message(msg)
+
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = USER_AUTH_SECRET
