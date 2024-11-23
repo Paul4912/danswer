@@ -99,15 +99,22 @@ export const SearchSection = ({
 
   const [showApiKeyModal, setShowApiKeyModal] = useState(true);
 
-  const [agentic, setAgentic] = useState(agenticSearchEnabled);
+  // const [agentic, setAgentic] = useState(agenticSearchEnabled);
+  const [agentic, setAgentic] = useState(false);
 
   const toggleAgentic = useCallback(() => {
-    Cookies.set(
-      AGENTIC_SEARCH_TYPE_COOKIE_NAME,
-      String(!agentic).toLocaleLowerCase()
-    );
-    setAgentic((agentic) => !agentic);
-  }, [agentic]);
+    // Always set agentic to false, ignoring any toggling logic
+    Cookies.set(AGENTIC_SEARCH_TYPE_COOKIE_NAME, "false");
+    setAgentic(false);
+  }, []);
+
+  // const toggleAgentic = useCallback(() => {
+  //   Cookies.set(
+  //     AGENTIC_SEARCH_TYPE_COOKIE_NAME,
+  //     String(!agentic).toLocaleLowerCase()
+  //   );
+  //   setAgentic((agentic) => !agentic);
+  // }, [agentic]);
 
   const toggleSidebar = useCallback(() => {
     Cookies.set(
@@ -667,15 +674,15 @@ export const SearchSection = ({
         <div
           ref={sidebarElementRef}
           className={`
-            flex-none 
+            flex-none
             fixed
-            left-0 
+            left-0
             z-30
-            bg-background-100 
+            bg-background-100
             h-screen
-            transition-all 
+            transition-all
             bg-opacity-80
-            duration-300 
+            duration-300
             ease-in-out
             ${
               !untoggled && (showDocSidebar || toggledSidebar)
@@ -715,7 +722,7 @@ export const SearchSection = ({
                   h-full
                   transition-all
                   bg-opacity-80
-                  duration-300 
+                  duration-300
                   ease-in-out
                   ${toggledSidebar ? "w-[250px]" : "w-[0px]"}
                 `}
@@ -765,7 +772,7 @@ export const SearchSection = ({
                     className={`mobile:fixed mobile:left-1/2 mobile:transform mobile:-translate-x-1/2 mobile:max-w-search-bar-max mobile:w-[90%] mobile:z-100 mobile:bottom-12`}
                   >
                     <div
-                      className={`transition-all duration-500 ease-in-out overflow-hidden 
+                      className={`transition-all duration-500 ease-in-out overflow-hidden
                       ${
                         firstSearch
                           ? "opacity-100 max-h-[500px]"
