@@ -21,11 +21,12 @@ def write_invited_users(emails: list[str]) -> int:
     store = get_kv_store()
     store.store(KV_USER_STORE_KEY, cast(JSON_ro, emails))
 
-    # AWS SES has default rate limit of 1 email/second
+    return len(emails)
+
+def send_invites(emails: list[str]) -> None:
+    # AWS SES has a default rate limit of 1 email/second
     RATE_LIMIT = 1.0
 
     for email in emails:
         send_invite_welcome_email(email)
         time.sleep(RATE_LIMIT)
-
-    return len(emails)

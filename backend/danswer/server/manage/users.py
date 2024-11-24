@@ -23,6 +23,7 @@ from sqlalchemy.orm import Session
 
 from danswer.auth.invited_users import get_invited_users
 from danswer.auth.invited_users import write_invited_users
+from danswer.auth.invited_users import send_invites
 from danswer.auth.noauth_user import fetch_no_auth_user
 from danswer.auth.noauth_user import set_no_auth_user_preferences
 from danswer.auth.schemas import UserRole
@@ -220,6 +221,7 @@ def bulk_invite_users(
 
     all_emails = list(set(normalized_emails) | set(initial_invited_users))
     number_of_invited_users = write_invited_users(all_emails)
+    send_invites(normalized_emails)
 
     if not MULTI_TENANT:
         return number_of_invited_users
