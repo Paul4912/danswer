@@ -5,9 +5,6 @@ from danswer.key_value_store.factory import get_kv_store
 from danswer.key_value_store.interface import JSON_ro
 from danswer.key_value_store.interface import KvKeyNotFoundError
 
-from danswer.auth.users import send_invite_welcome_email
-import time
-
 def get_invited_users() -> list[str]:
     try:
         store = get_kv_store()
@@ -22,11 +19,3 @@ def write_invited_users(emails: list[str]) -> int:
     store.store(KV_USER_STORE_KEY, cast(JSON_ro, emails))
 
     return len(emails)
-
-def send_invites(emails: list[str]) -> None:
-    # AWS SES has a default rate limit of 1 email/second
-    RATE_LIMIT = 1.0
-
-    for email in emails:
-        send_invite_welcome_email(email)
-        time.sleep(RATE_LIMIT)

@@ -97,6 +97,7 @@ from shared_configs.configs import CURRENT_TENANT_ID_CONTEXTVAR
 from shared_configs.configs import MULTI_TENANT
 from shared_configs.configs import POSTGRES_DEFAULT_SCHEMA
 
+import time
 
 logger = setup_logger()
 
@@ -249,6 +250,15 @@ The Buddy Team</p>
         s.starttls()
         s.login(SMTP_USER, SMTP_PASS)
         s.send_message(msg)
+
+# Written by Buddy
+def send_invites(emails: list[str]) -> None:
+    # AWS SES has a default rate limit of 1 email/second
+    RATE_LIMIT = 1.0
+
+    for email in emails:
+        send_invite_welcome_email(email)
+        time.sleep(RATE_LIMIT)
 
 # Written by Buddy
 def send_invite_welcome_email(

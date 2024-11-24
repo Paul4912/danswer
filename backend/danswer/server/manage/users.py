@@ -23,7 +23,6 @@ from sqlalchemy.orm import Session
 
 from danswer.auth.invited_users import get_invited_users
 from danswer.auth.invited_users import write_invited_users
-from danswer.auth.invited_users import send_invites
 from danswer.auth.noauth_user import fetch_no_auth_user
 from danswer.auth.noauth_user import set_no_auth_user_preferences
 from danswer.auth.schemas import UserRole
@@ -33,6 +32,7 @@ from danswer.auth.users import current_curator_or_admin_user
 from danswer.auth.users import current_user
 from danswer.auth.users import get_tenant_id_for_email
 from danswer.auth.users import optional_user
+from danswer.auth.users import send_invites
 from danswer.configs.app_configs import AUTH_TYPE
 from danswer.configs.app_configs import ENABLE_EMAIL_INVITES
 from danswer.configs.app_configs import SESSION_EXPIRE_TIME_SECONDS
