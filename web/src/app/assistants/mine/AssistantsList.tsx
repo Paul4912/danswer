@@ -451,7 +451,7 @@ export function AssistantsList() {
           <>
             <Separator />
 
-            <h3 className="text-xl font-bold mb-4">Your Hidden Assistants</h3>
+            <h3 className="text-xl font-bold mb-4">Your Hidden Specialists</h3>
 
             <h3 className="text-lg text-text-500">
               Specialists you&apos;ve created that aren&apos;t currently visible
