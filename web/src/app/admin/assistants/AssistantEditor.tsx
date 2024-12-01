@@ -449,14 +449,14 @@ export function AssistantEditor({
                       {values.uploaded_image ? (
                         <img
                           src={URL.createObjectURL(values.uploaded_image)}
-                          alt="Uploaded assistant icon"
+                          alt="Uploaded specialist icon"
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : existingPersona?.uploaded_image_id &&
                         !removePersonaImage ? (
                         <img
                           src={buildImgUrl(existingPersona?.uploaded_image_id)}
-                          alt="Uploaded assistant icon"
+                          alt="Uploaded specialist icon"
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : (
@@ -879,7 +879,7 @@ export function AssistantEditor({
                                       <>
                                         If this functionality would be useful,
                                         reach out to the administrators of
-                                        Danswer for assistance.
+                                        Buddy for assistance.
                                       </>
                                     )}
                                   </p>
@@ -995,7 +995,7 @@ export function AssistantEditor({
                           setFieldValue("task_prompt", e.target.value);
                         }}
                         explanationText="Learn about prompting in our docs!"
-                        explanationLink="https://docs.danswer.dev/guides/assistants"
+                        explanationLink="https://doc.enigmas.io/admin-panel/markdown"
                       />
                     </>
                   )}
@@ -1160,7 +1160,7 @@ export function AssistantEditor({
                       setFieldValue,
                       ...formikProps,
                     }}
-                    objectName="assistant"
+                    objectName="Specialist"
                     enforceGroupSelection={false}
                   />
                 </>
