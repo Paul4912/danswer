@@ -370,7 +370,26 @@ class DefaultMultiLLM(LLM):
             self.log_model_configs()
 
         if DISABLE_LITELLM_STREAMING:
-            yield self.invoke(prompt, tools, tool_choice, structured_response_format)
+            full_message = self.invoke(prompt, tools, tool_choice, structured_response_format)
+
+            # If it's an AIMessage, we can split it into chunks
+            if isinstance(full_message, AIMessage):
+                content = full_message.content or ""
+                # For simplicity, break into chunks of 50 characters. 
+                # You can choose a different strategy like splitting by sentences or tokens.
+                chunk_size = 50
+                chunks = [content[i:i+chunk_size] for i in range(0, len(content), chunk_size)]
+
+                # Yield each chunk as an AIMessageChunk
+                for i, text_chunk in enumerate(chunks):
+                    yield AIMessageChunk(
+                        content=text_chunk,
+                        additional_kwargs={"usage_metadata": {"stop": None}}
+                    )
+            else:
+                # If it's a different message type (System, Human, etc.), just yield it as-is.
+                yield full_message
+
             return
 
         output = None
