@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from collections.abc import Iterator
 from typing import Any
 from typing import cast
@@ -372,22 +373,20 @@ class DefaultMultiLLM(LLM):
         if DISABLE_LITELLM_STREAMING:
             full_message = self.invoke(prompt, tools, tool_choice, structured_response_format)
 
-            # If it's an AIMessage, we can split it into chunks
             if isinstance(full_message, AIMessage):
                 content = full_message.content or ""
-                # For simplicity, break into chunks of 50 characters. 
-                # You can choose a different strategy like splitting by sentences or tokens.
                 chunk_size = 50
                 chunks = [content[i:i+chunk_size] for i in range(0, len(content), chunk_size)]
 
-                # Yield each chunk as an AIMessageChunk
                 for i, text_chunk in enumerate(chunks):
+                    # Simulate a delay to mimic streaming
+                    time.sleep(0.1)  # adjust the duration as needed
                     yield AIMessageChunk(
                         content=text_chunk,
                         additional_kwargs={"usage_metadata": {"stop": None}}
                     )
             else:
-                # If it's a different message type (System, Human, etc.), just yield it as-is.
+                # No streaming needed for non-AI messages, just yield directly
                 yield full_message
 
             return
