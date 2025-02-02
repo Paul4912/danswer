@@ -40,21 +40,21 @@ def send_email(
 
 
 def send_user_email_invite(user_email: str, current_user: User) -> None:
-    subject = "Invitation to Join Onyx Organization"
+    subject = "Invitation to Join Buddy"
     body = dedent(
         f"""\
-        Hello,
+        Welcome to Buddy!,
 
-        You have been invited to join an organization on Onyx.
+        You have been invited to join Buddy, your AI-powered co-worker.
 
-        To join the organization, please visit the following link:
+        Click here to join:
 
         {WEB_DOMAIN}/auth/signup?email={user_email}
 
         You'll be asked to set a password or login with Google to complete your registration.
 
         Best regards,
-        The Onyx Team
+        The Buddy Team
     """
     )
 
@@ -66,7 +66,7 @@ def send_forgot_password_email(
     token: str,
     mail_from: str = EMAIL_FROM,
 ) -> None:
-    subject = "Onyx Forgot Password"
+    subject = "Buddy Forgot Password"
     link = f"{WEB_DOMAIN}/auth/reset-password?token={token}"
     body = f"Click the following link to reset your password: {link}"
     send_email(user_email, subject, body, mail_from)
@@ -77,7 +77,14 @@ def send_user_verification_email(
     token: str,
     mail_from: str = EMAIL_FROM,
 ) -> None:
-    subject = "Onyx Email Verification"
+    subject = "Buddy Email Verification"
     link = f"{WEB_DOMAIN}/auth/verify-email?token={token}"
-    body = f"Click the following link to verify your email address: {link}"
-    send_email(user_email, subject, body, mail_from)
+    # body = f"Click the following link to verify your email address: {link}"
+    text_content = f"""
+Welcome to Buddy!
+Please verify your email address by clicking this link: {link}
+For any issues or support, please email us at buddy@enigmas.io
+Best regards,
+The Buddy Team
+    """.strip()
+    send_email(user_email, subject, text_content, mail_from)
